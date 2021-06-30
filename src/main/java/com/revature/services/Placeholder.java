@@ -1,11 +1,6 @@
-package com.revature;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+package com.revature.services;
 
 public interface Placeholder {
-	//private static Logger log = LoggerFactory.getLogger(Placeholder.class);
-	
 	
 	/*
 	 * This is a placeholder file created simple to maintain the Maven file structure on GitHub. 
