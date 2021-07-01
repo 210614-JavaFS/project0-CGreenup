@@ -1,5 +1,7 @@
 package com.revature.ui;
 
+import java.util.Scanner;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,7 +13,14 @@ public class Driver {
 	
 	public static void main(String[] args) {
 		
+		boolean loggedIn = false;
+		Scanner scanner = new Scanner(System.in);
 		
+		while (!loggedIn) {
+			System.out.println("Welcome to Purity Bank!");
+			System.out.println("");
+			scanner.nextLine();
+		}
 		
 	}
 

@@ -6,24 +6,29 @@ import org.slf4j.LoggerFactory;
 public class Account {
 
 	//Class fields
-	private String name;
+	private Profile owner;
+	private String accountName;
 	private String accountType;
 	private double balance;
 	Logger log = LoggerFactory.getLogger(Account.class);
 	
+	public Account(String name, String accountType, double balance) {
+		super();
+		this.accountName = name;
+		this.accountType = accountType;
+		this.balance = balance;
+	}
+	
 	//Getters
-	public String getName() 			{ return name; }
-	public String getAccountType() 		{ return accountType; }
-	public double getBalance() 			{ return balance; }
+	public String getAccountName() 		{ return accountName; 	}
+	public String getAccountType() 		{ return accountType; 	}
+	public double getBalance() 			{ return balance; 		}
+	public Profile getOwner()			{ return owner;			}
 
 	//Setters
-	public void setName(String name) { 
-		this.name = name; 
-		}
-	
-	public void setAccountType(String accountType) { 
-		this.accountType = accountType; 
-		}
+	public void setAccountName(String name) 		{ this.accountName = name;	}
+	public void setAccountType(String accountType) 	{ this.accountType = accountType; }
+	public void setOwner(Profile owner) 			{ this.owner = owner; }
 	
 	//Changes the balance of the account
 	//Positive change signifies a deposit
@@ -40,6 +45,9 @@ public class Account {
 		this.balance = temp;
 	}
 	
+	//Rounds an input to two decimal places
+	//Returns the result
+	//Ex. roundToTwo(1234.56789) returns 1234.57
 	public static double roundToTwo(double input) {
 		return (double) (Math.round(input * 100.0) / 100.0);
 	}
