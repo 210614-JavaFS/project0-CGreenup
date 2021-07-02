@@ -1,3 +1,4 @@
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -38,10 +39,24 @@ public class AccountTest {
 	
 	
 	@Test
-	public void testWithdrawal() {
+	public void testOverdrawing() {
 		assertThrows(NegativeAccountException.class, ()->{
-			acc.changeBalance(-2500);
+			acc.changeBalance(-acc.getBalance() - 201.678);
 			});
+	}
+	
+	@Test
+	public void testWithdrawingAndRounding() {
+		double prevBalance = acc.getBalance();
+		try {
+			acc.changeBalance(500);
+			acc.changeBalance(-200.678435345);
+			assertEquals(prevBalance + 500 - 200.68, acc.getBalance());
+		} catch (NegativeAccountException e) {
+			e.printStackTrace();
+		} finally {
+			assertEquals(prevBalance + 500 - 200.68, acc.getBalance());
+		}
 	}
 	
 	@Test

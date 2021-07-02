@@ -35,6 +35,7 @@ public class Account {
 	//Negative change signifies a withdrawal
 	public void changeBalance(double change) throws NegativeAccountException { 
 		double temp = roundToTwo(balance) + roundToTwo(change);
+//		double temp = roundToTwo(roundToTwo(balance) + roundToTwo(change));
 		
 		if (temp < 0.00) {
 			log.error("Account attempted a negative balance.");
