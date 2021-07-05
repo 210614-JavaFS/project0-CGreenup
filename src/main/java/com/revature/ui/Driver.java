@@ -79,7 +79,7 @@ public class Driver {
 			createAccount();
 		}
 		//Otherwise, if the user enters a word to quit, end the program
-		else if(menuOptions[2].concat("leave end").toLowerCase().contains(inputArray[0])) {
+		else if(menuOptions[2].concat("leave end exit").toLowerCase().contains(inputArray[0])) {
 			//TODO
 			System.out.println(menuOptions[2] + " " + inputArray[0]);
 			wantToQuit = true;

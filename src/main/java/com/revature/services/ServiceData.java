@@ -2,7 +2,6 @@ package com.revature.services;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -24,13 +23,14 @@ public class ServiceData {
 		initializeProfiles();
 	}
 	
+	//Initialize Profiles
 	private void initializeProfiles() {
 		//TODO
 		//Get database connection
 		//Put all the profiles in the list
 		//
 		
-		Profile profile = new Profile("dave", "DaveAcc", "pass");
+		Profile profile = new Profile("June", "JuneAdmin", "ThePasswordForThisProgram", true);
 		allProfiles.put(profile.getUsername(), profile);
 	}
 	
@@ -73,7 +73,7 @@ public class ServiceData {
 		System.out.println("Finally, what is your name?\n");
 		String name = scanner.nextLine().stripLeading().stripTrailing();
 		
-		Profile profile = new Profile(name, username, password);
+		Profile profile = new Profile(name, username, password, false);
 		
 		allProfiles.put(username, profile);
 		printProfiles();
@@ -85,4 +85,6 @@ public class ServiceData {
 			System.out.println(p.getUsername() + " " + p.getPassword() + " " + p.getName());
 		}
 	}
+	
+	
 }

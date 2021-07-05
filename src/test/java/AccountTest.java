@@ -59,9 +59,5 @@ public class AccountTest {
 		}
 	}
 	
-	@Test
-	public void testingTest() {
-		assertTrue(true);
-	}
 	
 }
