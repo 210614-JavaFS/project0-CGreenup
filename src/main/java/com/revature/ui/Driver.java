@@ -13,8 +13,10 @@ public class Driver {
 	
 	public static void main(String[] args) {
 		
+		int spacing = 5; //6
 		boolean wantToQuit = false;
 		Scanner scanner = new Scanner(System.in);
+		//Stretch goal, make this a hash map instead of a String array. Map string to function
 		String[] menuOptions = {
 				"Login",
 				"Create New Account",
@@ -36,7 +38,7 @@ public class Driver {
 		
 		while (!wantToQuit) {
 			//Print all the options the user has
-			printMainMenu(menuOptions);
+			printMainMenu(menuOptions, spacing);
 						
 			wantToQuit = parseInput(wantToQuit, scanner, menuOptions);
 		}
@@ -46,10 +48,10 @@ public class Driver {
 	}
 
 	//Prints out all of the items
-	private static void printMainMenu(String[] menuOptions) {
+	private static void printMainMenu(String[] menuOptions, int spacing) {
 		System.out.println("Would you like to:");
 		for(int i = 0; i < menuOptions.length; i++)
-			System.out.printf("%-6s %s\n", "[" + (i+1) + "]", menuOptions[i].replace("" + (i+1), ""));
+			System.out.printf("%-"+spacing+"s %s\n", "[" + (i+1) + "]", menuOptions[i].replace("" + (i+1), ""));
 			//Print out the line: [#]	menuOption[i], but remove the number from menu
 		
 	}
@@ -68,17 +70,17 @@ public class Driver {
 		}
 		//Otherwise, if the user entered anything within login, do TODO
 		else if(menuOptions[0].toLowerCase().contains(inputArray[0])) {
-			//DEBUG
-			System.out.println(menuOptions[0] + " " + inputArray[0]);
+			//TODO
+			login();
 		}
 		//Otherwise, if the user entered anything within "create new account" do TODO
 		else if (menuOptions[1].toLowerCase().contains(inputArray[0])) {
-			//DEBUG
-			System.out.println(menuOptions[1] + " " + inputArray[0]);
+			//TODO
+			createAccount();
 		}
 		//Otherwise, if the user enters a word to quit, end the program
 		else if(menuOptions[2].concat("leave end").toLowerCase().contains(inputArray[0])) {
-			//DEBUG
+			//TODO
 			System.out.println(menuOptions[2] + " " + inputArray[0]);
 			wantToQuit = true;
 		}
@@ -89,12 +91,12 @@ public class Driver {
 		return wantToQuit;
 	}
 	
-	private void login() {
+	private static void login() {
 		//send task off to service layer
 	}
 	
-	private void createAccount() {
-		//send task off to service layer
+	private static void createAccount() {
+		ServiceData.getServiceData().createProfile();
 	}
 	
 }

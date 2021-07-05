@@ -34,16 +34,15 @@ public class Account {
 	//Positive change signifies a deposit
 	//Negative change signifies a withdrawal
 	public void changeBalance(double change) throws NegativeAccountException { 
-		double temp = roundToTwo(balance) + roundToTwo(change);
-//		double temp = roundToTwo(roundToTwo(balance) + roundToTwo(change));
+		double newBalance = roundToTwo(balance) + roundToTwo(change);
 		
-		if (temp < 0.00) {
+		if (newBalance < 0.00) {
 			log.error("Account attempted a negative balance.");
-			log.error(roundToTwo(balance) + " + " + roundToTwo(change) + " = " + temp);
+			log.error(roundToTwo(balance) + " + " + roundToTwo(change) + " = " + newBalance);
 			throw new NegativeAccountException("Account attempted a negative balance.");
 		}
 		
-		this.balance = temp;
+		this.balance = newBalance;
 	}
 	
 	//Rounds an input to two decimal places
