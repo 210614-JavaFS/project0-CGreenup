@@ -52,24 +52,31 @@ public class ServiceData {
 		
 		//This do-while loop ensures the username is unique
 		do {
-			System.out.println("Please enter a username for your profile:\n");
+			System.out.println("Please enter a username for your profile:");
 			userInput = scanner.nextLine().strip();
 			
 			//If the user input isn't just whitespace / empty, then continue
-			if(userInput != "" || userInput != null) {
+			if(userInput == "" || userInput != null) {
 				//Check if the username is unique using the Map
 				//If the username is in the map, it's taken
 				if(allProfiles.get(userInput) != null) {
 					System.out.println("That username is taken, please choose another.");
 				}
 			}
-		} while (allProfiles.get(userInput) != null);
+		} while (userInput == "" || allProfiles.get(userInput) != null);
 		
 		String username = userInput;
 		
-		//Get a password
-		System.out.println("Please enter a password for your profile:\n");
-		String password = scanner.nextLine().strip();
+		System.out.println();
+		//Get a password		
+		do {
+			System.out.println("Please enter a password for your profile:");
+			userInput = scanner.nextLine().strip();
+			
+		} while (userInput.equals(""));
+		
+		String password = userInput;
+		System.out.println();
 		
 		//TODO: stretch goal - validate password entering, do-while
 		
