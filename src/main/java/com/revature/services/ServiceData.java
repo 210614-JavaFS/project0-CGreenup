@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.revature.data.DatabaseConnector;
+import com.sun.tools.sjavac.Log;
 
 public class ServiceData {
 
@@ -18,19 +19,21 @@ public class ServiceData {
 	private static ServiceData serviceData = null;
 	private static Scanner scanner;
 	
+	//Constructor for the singleton
 	private ServiceData() {
 		allProfiles = new HashMap<String, Profile>();
 		initializeProfiles();
 	}
 	
 	//Initialize Profiles
+	//Gets all the profiles in the database and stores them into the allProfiles Map
 	private void initializeProfiles() {
 		//TODO
 		//Get database connection
 		//Put all the profiles in the list
 		//
 		
-		Profile profile = new Profile("June", "JuneAdmin", "ThePasswordForThisProgram", true);
+		Profile profile = new Profile("June Greenup", "JuneAdmin", "ThePasswordForThisProgram", true);
 		allProfiles.put(profile.getUsername(), profile);
 	}
 	
@@ -76,7 +79,37 @@ public class ServiceData {
 		Profile profile = new Profile(name, username, password, false);
 		
 		allProfiles.put(username, profile);
-		printProfiles();
+	}
+
+	
+	//Method for Logging into a profile given a username and password
+	//	- Checks if the username is one registered with the service
+	//	- Checks if the password is correct for that account
+	//	- Informs user if there was an error with any of their inputs
+	public static Profile loginProfile(String username, String password) {
+		
+		Profile profile = null;
+		
+		//If there is a profile with the given username...
+		if(allProfiles.containsKey(username)) {
+//			profile = allProfiles.get(username).getPassword().equals(password)? allProfiles.get(username) : null;
+			
+			//...and the password is correct
+			if (allProfiles.get(username).getPassword().equals(password)) {
+				//Then set the profile to the profile with that username
+				profile = allProfiles.get(username);
+				log.info(username + " logged in successfully.");
+				
+			}else {
+				System.out.println("Error logging in: password is incorrect");
+				log.error("The account " + username + " does not use the password " + password);
+			}
+		}else {
+			System.out.println("Error logging in: There is no account with that username");
+			log.error("There is no account with username:" + username);
+		}
+		
+		return profile;
 	}
 	
 	//DEBUG

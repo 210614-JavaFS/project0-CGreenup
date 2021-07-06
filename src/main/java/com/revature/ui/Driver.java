@@ -41,6 +41,7 @@ public class Driver {
 			printMainMenu(menuOptions, spacing);
 						
 			wantToQuit = parseInput(wantToQuit, scanner, menuOptions);
+			System.out.println();
 		}
 		
 		scanner.close();
@@ -70,12 +71,19 @@ public class Driver {
 		}
 		//Otherwise, if the user entered anything within login, do TODO
 		else if(menuOptions[0].toLowerCase().contains(inputArray[0])) {
-			//TODO
-			login();
+			//DEBUG
+			ServiceData.getServiceData();
+			ServiceData.printProfiles();
+			
+			
+			login(scanner);
 		}
 		//Otherwise, if the user entered anything within "create new account" do TODO
 		else if (menuOptions[1].toLowerCase().contains(inputArray[0])) {
-			//TODO
+			//DEBUG
+			ServiceData.getServiceData();
+			ServiceData.printProfiles();
+			
 			createAccount();
 		}
 		//Otherwise, if the user enters a word to quit, end the program
@@ -86,17 +94,21 @@ public class Driver {
 		}
 		else {
 			System.out.println("I don't know what you mean by " + userInput + ".\n"
-					+ "Please try entering the command again");
+					+ "Please try entering one of the following commands again.");
 		}
 		return wantToQuit;
 	}
 	
-	private static void login() {
-		//send task off to service layer
+	private static void login(Scanner scanner) {
+		profileMenu.login(scanner);
+		System.out.println();
 	}
 	
 	private static void createAccount() {
-		ServiceData.getServiceData().createProfile();
+		ServiceData.getServiceData();
+		ServiceData.createProfile();
+		System.out.println();
+		System.out.println("Account created successfully!");
 	}
 	
 }
