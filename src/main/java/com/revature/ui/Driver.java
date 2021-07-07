@@ -49,7 +49,7 @@ public class Driver {
 	}
 
 	//Prints out all of the items
-	private static void printMainMenu(String[] menuOptions, int spacing) {
+	public static void printMainMenu(String[] menuOptions, int spacing) {
 		System.out.println("Would you like to:");
 		for(int i = 0; i < menuOptions.length; i++)
 			System.out.printf("%-"+spacing+"s %s\n", "[" + (i+1) + "]", menuOptions[i].replace("" + (i+1), ""));
@@ -65,11 +65,11 @@ public class Driver {
 		userInput = scanner.nextLine().strip().toLowerCase();
 		inputArray = userInput.split(" ");
 		
-		//If the user doesn't enter anything do TODO
+		//If the user doesn't enter anything do nothing
 		if (userInput.equals("")) {
 			System.out.println("buh");
 		}
-		//Otherwise, if the user entered anything within login, do TODO
+		//Otherwise, if the user entered anything within login, call the login method
 		else if(menuOptions[0].toLowerCase().contains(inputArray[0])) {
 			//DEBUG
 			ServiceData.getServiceData();
@@ -78,7 +78,7 @@ public class Driver {
 			
 			login(scanner);
 		}
-		//Otherwise, if the user entered anything within "create new account" do TODO
+		//Otherwise, if the user entered anything within "create new account" call the createAccount method
 		else if (menuOptions[1].toLowerCase().contains(inputArray[0])) {
 			//DEBUG
 			ServiceData.getServiceData();
@@ -100,7 +100,7 @@ public class Driver {
 	}
 	
 	private static void login(Scanner scanner) {
-		profileMenu.login(scanner);
+		ProfileMenu.login(scanner);
 		System.out.println();
 	}
 	

@@ -9,16 +9,31 @@ public class Profile {
 	private String username;
 	private String password;
 	
-	private boolean admin;
+	private AccountTypes accountType;
+	
+	//TODO
+	//REFACTOR ADMIN PRIVELAGES
+	//MAKE IT SO EACH FUNCTION IS A BOOL
+	
 	
 	private HashMap<Integer, Account> connectedAcounts;
 
-	public Profile(String name, String username, String password, Boolean adminPrivelages) {
+	public Profile(String name, String username, String password, AccountTypes accountTypes) {
 		super();
 		this.name = name;
 		this.username = username;
 		this.password = password;
-		this.admin = adminPrivelages;
+		this.accountType = accountTypes;
+		
+		connectedAcounts = new HashMap<Integer, Account>();
+	}
+	
+	public Profile(String name, String username, String password) {
+		super();
+		this.name = name;
+		this.username = username;
+		this.password = password;
+		this.accountType = AccountTypes.USER;
 		
 		connectedAcounts = new HashMap<Integer, Account>();
 	}

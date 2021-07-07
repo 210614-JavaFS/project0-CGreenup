@@ -33,7 +33,7 @@ public class ServiceData {
 		//Put all the profiles in the list
 		//
 		
-		Profile profile = new Profile("June Greenup", "JuneAdmin", "ThePasswordForThisProgram", true);
+		Profile profile = new Profile("June Greenup", "JuneAdmin", "ThePasswordForThisProgram", AccountTypes.ADMIN);
 		allProfiles.put(profile.getUsername(), profile);
 	}
 	
@@ -83,7 +83,7 @@ public class ServiceData {
 		System.out.println("Finally, what is your name?\n");
 		String name = scanner.nextLine().stripLeading().stripTrailing();
 		
-		Profile profile = new Profile(name, username, password, false);
+		Profile profile = new Profile(name, username, password);
 		
 		allProfiles.put(username, profile);
 	}
