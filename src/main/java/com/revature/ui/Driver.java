@@ -40,7 +40,7 @@ public class Driver {
 			//Print all the options the user has
 			printMainMenu(menuOptions, spacing);
 						
-			wantToQuit = parseInput(wantToQuit, scanner, menuOptions);
+			wantToQuit = parseInput(scanner, menuOptions);
 			System.out.println();
 		}
 		
@@ -58,7 +58,10 @@ public class Driver {
 	}
 	
 	//Parses the user's input
-	private static boolean parseInput(boolean wantToQuit, Scanner scanner, String[] menuOptions) {
+	//returns a boolean to know if it is time to quit the program
+	//wantToQuit is used
+	private static boolean parseInput( Scanner scanner, String[] menuOptions) {
+		
 		String userInput;
 		String[] inputArray;
 		//get the user's response
@@ -90,13 +93,13 @@ public class Driver {
 		else if(menuOptions[2].concat("leave end exit").toLowerCase().contains(inputArray[0])) {
 			//TODO
 			System.out.println(menuOptions[2] + " " + inputArray[0]);
-			wantToQuit = true;
+			return true;
 		}
 		else {
 			System.out.println("I don't know what you mean by " + userInput + ".\n"
 					+ "Please try entering one of the following commands again.");
 		}
-		return wantToQuit;
+		return false;
 	}
 	
 	private static void login(Scanner scanner) {

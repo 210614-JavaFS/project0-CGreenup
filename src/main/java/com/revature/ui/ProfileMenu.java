@@ -37,6 +37,10 @@ public class ProfileMenu {
 		System.out.println("Logging out...");
 	}
 
+	//Validate the user's input
+	//Validates that the username is unique
+	//Validates that the fields are valid (IE aren't just an empty string)
+	//Once the fields have been verified, a profile is logged accessed and returned
 	private static Profile validateUserInput(Scanner scanner) {
 		Profile profile;
 		String username;
@@ -86,16 +90,22 @@ public class ProfileMenu {
 		//This is obscene
 //		userInput = scanner.nextLine().strip().split(" ")[0].toLowerCase();
 		
-		//If the user doesn't enter anything do nothing
+		//If the user doesn't enter anything do nothing.
 		if (userInput.equals("")) {
 			logger.info("User entered nothing");
 		}
+		
+		//If the user wants to apply for a new account, call the applyForAccount() method
+		else if(menuOptions[1].toLowerCase().contains(userInput)) {
+			logger.info(profile.getName() + " applied for a new account.");
+			applyForAccount(profile);
+		}
+		
 		else if(menuOptions[2].toLowerCase().contains(userInput)){
 			logger.info(profile.getName() + " logged out.");
 			return false;
 		}
-		else if(menuOptions[2].concat("leave end exit").toLowerCase().contains(inputArray[0])) {
-			//TODO
+		else if(menuOptions[3].concat("leave end exit").toLowerCase().contains(inputArray[0])) {
 			logger.info(profile.getName() + " exited the program from profile.");
 			System.out.println("Exiting Program");
 			System.exit(0);
@@ -104,6 +114,12 @@ public class ProfileMenu {
 		return true;
 	}
 	
+	private static void applyForAccount(Profile profile) {
+		//TODO display accounts applied for
+		//
+		
+	}
+
 	private static void lookAtAccounts(Profile profile, Scanner scanner) {
 		
 	}
