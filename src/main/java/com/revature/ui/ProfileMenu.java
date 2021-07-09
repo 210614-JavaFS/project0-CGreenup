@@ -18,13 +18,12 @@ public class ProfileMenu {
 		Profile profile = null;
 		
 		do {
-			profile = validateUserLoginInput(scanner);
-			
+			profile = ServiceData.loginProfile();
 			System.out.println();
 			
 		}while (profile == null);
 		
-		System.out.println("Welcome, " + profile.getName().split(" ")[0] + ".");
+		System.out.println("Welcome, " + profile.getFirstName() + ".");
 		
 		//TODO
 		//PROFILE MENU AND OPTIONS
@@ -36,31 +35,32 @@ public class ProfileMenu {
 		System.out.println("Logging out...");
 	}
 
+	//TODO move this to service layer
 	//Validate the user's input
 	//Validates that the username is unique
 	//Validates that the fields are valid (IE aren't just an empty string)
 	//Once the fields have been verified, a profile is logged accessed and returned
-	private static Profile validateUserLoginInput(Scanner scanner) {
-		Profile profile;
-		String username;
-		String password;
-		do {
-			System.out.println("Please enter your username:\n");
-			username = scanner.nextLine().strip();
-		} while (username == "");
-		
-		do {
-			System.out.println("Please enter your password:\n");
-			password = scanner.nextLine().strip();
-		} while (password == "");
-		
-		profile = ServiceData.loginProfile(username, password);
-		
-		if(profile == null) {
-			System.out.println("Please try again.");
-		}
-		return profile;
-	}
+//	private static Profile validateUserLoginInput(Scanner scanner) {
+//		Profile profile;
+//		String username;
+//		String password;
+//		do {
+//			System.out.println("Please enter your username:\n");
+//			username = scanner.nextLine().strip();
+//		} while (username == "");
+//		
+//		do {
+//			System.out.println("Please enter your password:\n");
+//			password = scanner.nextLine().strip();
+//		} while (password == "");
+//		
+//		profile = ServiceData.loginProfile(username, password);
+//		
+//		if(profile == null) {
+//			System.out.println("Please try again.");
+//		}
+//		return profile;
+//	}
 	
 	private static boolean menuOptions(Profile profile, Scanner scanner) {
 		//Create a String Array of the menu options
@@ -95,21 +95,21 @@ public class ProfileMenu {
 		}
 		//If the user wants to manage accounts, call the lookAtAccount() method
 		else if(menuOptions[0].toLowerCase().contains(userInput)) {
-			logger.info(profile.getName() + " applied for a new account.");
+			logger.info(profile.getFirstName() + " applied for a new account.");
 			applyForAccount(profile);
 		}
 		//If the user wants to apply for a new account, call the applyForAccount() method
 		else if(menuOptions[1].toLowerCase().contains(userInput)) {
-			logger.info(profile.getName() + " applied for a new account.");
+			logger.info(profile.getFirstName() + " applied for a new account.");
 			applyForAccount(profile);
 		}
 		
 		else if(menuOptions[2].toLowerCase().contains(userInput)){
-			logger.info(profile.getName() + " logged out.");
+			logger.info(profile.getFirstName() + " logged out.");
 			return false;
 		}
 		else if(menuOptions[3].concat("leave end exit").toLowerCase().contains(inputArray[0])) {
-			logger.info(profile.getName() + " exited the program from profile.");
+			logger.info(profile.getFirstName() + " exited the program from profile.");
 			System.out.println("Exiting Program");
 			System.exit(0);
 		}

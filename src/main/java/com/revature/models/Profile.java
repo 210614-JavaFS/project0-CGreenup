@@ -5,7 +5,8 @@ import java.util.HashMap;
 public class Profile {
 
 	//Name of the profile owner
-	private String name;
+	private String firstName;
+	private String lastName;
 	
 	private String username;
 	private String password;
@@ -13,59 +14,38 @@ public class Profile {
 	//Account type: 
 	//	Whether the user is a customer(USER), an employee (EMPLOYEE), or admin(ADMIN)
 	private AccountTypes accountType;
-	
 
-	public Profile(String name, String username, String password, AccountTypes accountTypes) {
+	
+	
+	public Profile(String firstName, String lastName, String username, String password, AccountTypes accountType) {
 		super();
-		this.name = name;
+		this.firstName = firstName;
+		this.lastName = lastName;
 		this.username = username;
 		this.password = password;
-		this.accountType = accountTypes;
+		this.accountType = accountType;
 	}
-	
-	public Profile(String name, String username, String password) {
-		super();
-		this.name = name;
-		this.username = username;
-		this.password = password;
-		this.accountType = AccountTypes.USER;
-	}
-	
+
 	public Profile() {
 		super();
 	}
 
-	public String getName() {
-		return name;
-	}
+	public String 		getFirstName() 		{return firstName;}
+	public String 		getLastName() 		{return lastName;}
+	public String 		getUsername() 		{return username;}
+	public String 		getPassword() 		{return password;}
+	public AccountTypes getAccountType() 	{return accountType;}
 
-	public void setName(String name) {
-		this.name = name;
-	}
+	public void setFirstName(String name) 					{this.firstName = name;}
+	public void setLastName(String lastName) 				{this.lastName = lastName;}
+	public void setUsername(String username) 				{this.username = username;}
+	public void setPassword(String password) 				{this.password = password;}
+	public void setAccountType(AccountTypes accountType) 	{this.accountType = accountType;}
 
-	public String getUsername() {
-		return username;
-	}
-	
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public AccountTypes getAccountType() {
-		return accountType;
-	}
-
-	//This should only be accessible to admins
-	public void setAccountType(AccountTypes accountType) {
-		this.accountType = accountType;
+	@Override
+	public String toString() {
+		return "Profile [firstName=" + firstName + ", lastName=" + lastName + ", username=" + username + ", password="
+				+ password + ", accountType=" + accountType + "]";
 	}
 	
 	

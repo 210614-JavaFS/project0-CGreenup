@@ -3,6 +3,8 @@ package com.revature.models;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.revature.services.NegativeAccountException;
+
 public class Account {
 
 	//Class fields

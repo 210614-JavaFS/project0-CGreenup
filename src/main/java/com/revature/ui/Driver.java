@@ -84,7 +84,7 @@ public class Driver {
 			ServiceData.printProfiles();
 			
 			
-			login(scanner);
+			//login(scanner);
 		}
 		//Otherwise, if the user entered anything within "create new account" call the createAccount method
 		else if (menuOptions[1].toLowerCase().contains(inputArray[0])) {
@@ -92,7 +92,7 @@ public class Driver {
 			ServiceData.getServiceData();
 			ServiceData.printProfiles();
 			
-			createAccount();
+			//createAccount();
 		}
 		//Otherwise, if the user enters a word to quit, end the program
 		else if(menuOptions[2].concat("leave end exit").toLowerCase().contains(inputArray[0])) {
