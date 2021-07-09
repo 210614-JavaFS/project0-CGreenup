@@ -86,7 +86,7 @@ public class Driver {
 			ServiceData.getServiceData();
 			ServiceData.printProfiles();
 			
-			//createAccount();
+			createAccount();
 		}
 		//Otherwise, if the user enters a word to quit, end the program
 		else if(menuOptions[2].concat("leave end exit").toLowerCase().contains(inputArray[0])) {
@@ -110,7 +110,6 @@ public class Driver {
 		ServiceData.getServiceData();
 		ServiceData.createProfile();
 		System.out.println();
-		System.out.println("Account created successfully!");
 	}
 	
 }

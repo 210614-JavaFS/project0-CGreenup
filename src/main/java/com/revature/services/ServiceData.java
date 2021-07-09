@@ -1,19 +1,13 @@
 package com.revature.services;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.revature.data.DatabaseConnector;
 import com.revature.data.ProfileDAOImplement;
-import com.revature.models.AccountTypes;
 import com.revature.models.Profile;
-import com.sun.tools.sjavac.Log;
 
 public class ServiceData {
 
@@ -44,10 +38,12 @@ public class ServiceData {
 		return serviceData;
 	}
 	
+	//Creates a profile, validates user input, then puts it into the database if it can
 	public static void createProfile() {
 		Profile profile = new Profile();
 		String userInput;
 		
+		//Set Username
 		boolean nameTaken;
 		do {					
 			
@@ -66,12 +62,55 @@ public class ServiceData {
 		
 		profile.setUsername(userInput);
 		
+		//Set Password
+		userInput = "";
+		boolean passwordTooShort;
+		int passwordMinimumLength = 8;
+		do {
+			System.out.println("Please enter a password: ");
+			userInput = scanner.nextLine().strip();
+			
+			passwordTooShort = userInput.length() < passwordMinimumLength;
+			
+			if(passwordTooShort) {
+				System.out.println("That password is too short, it needs to be at least " + passwordMinimumLength + 
+						" characters long.");
+			}
+		}while(passwordTooShort);
+		
+		profile.setPassword(userInput);
+		
+		//Set First Name
+		
+		userInput = "";
+		
+		do {
+			System.out.println("Please enter your first name:");
+			userInput = scanner.nextLine().strip();
+			
+		}while(userInput.equals(""));
+		profile.setFirstName(userInput);
+		
+		//Set Last Name
+		
+		userInput = "";
+		
+		do {
+			System.out.println("Please enter your last name:");
+			userInput = scanner.nextLine().strip();
+			
+		}while(userInput.equals(""));
+		
+		profile.setLastName(userInput);
 		
 		System.out.println("Working...");
 		
 		if(implement.addProfile(profile)) {
 			System.out.println("\n\nProfile created successfully!\n");
 			log.info("New profile created: " + profile.toString());
+		}else {
+			System.out.println("ERROR: profile could not be created");
+			log.error("Profile was not able to be added to database: " + profile.toString());
 		}
 	}
 	

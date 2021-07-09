@@ -200,6 +200,9 @@ try(Connection conn = ConnectionUtil.getConnection()){
 				statement.setString(++index, "USE");
 			}
 			
+			statement.execute();
+			return true;
+			
 			
 		}catch(SQLException e) {
 			log.error("Tried to update profile, ran into SQLException");

@@ -73,7 +73,7 @@ public class ProfileMenu {
 		//If the user wants to manage accounts, call the lookAtAccount() method
 		else if(menuOptions[0].toLowerCase().contains(userInput)) {
 			logger.info(profile.getFirstName() + " applied for a new account.");
-			applyForAccount(profile);
+			lookAtAccounts(profile);
 		}
 		//If the user wants to apply for a new account, call the applyForAccount() method
 		else if(menuOptions[1].toLowerCase().contains(userInput)) {
@@ -100,7 +100,7 @@ public class ProfileMenu {
 		
 	}
 
-	private static void lookAtAccounts(Profile profile, Scanner scanner) {
+	private static void lookAtAccounts(Profile profile) {
 		
 	}
 	

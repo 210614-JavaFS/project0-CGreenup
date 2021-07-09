@@ -1,7 +1,5 @@
 package com.revature.models;
 
-import java.util.HashMap;
-
 public class Profile {
 
 	//Name of the profile owner
