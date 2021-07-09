@@ -18,9 +18,10 @@ import com.sun.tools.sjavac.Log;
 public class ServiceData {
 
 	public static Logger log = LoggerFactory.getLogger(ServiceData.class);
+	private static ProfileDAOImplement implement = new ProfileDAOImplement();
 	
 	private static ServiceData serviceData = null;
-	private static Scanner scanner;
+	private static Scanner scanner = new Scanner(System.in);
 	
 	//Constructor for the singleton
 	private ServiceData() {
@@ -44,15 +45,82 @@ public class ServiceData {
 	}
 	
 	public static void createProfile() {
-	
+		Profile profile = new Profile();
+		String userInput;
+		
+		boolean nameTaken;
+		do {					
+			
+			do {
+				System.out.println("Please enter a username for your profile:");
+				userInput = scanner.nextLine().strip().toLowerCase();
+			} while(userInput.equals(""));
+			
+			nameTaken = implement.usernameTaken(userInput);
+			
+			if(nameTaken) {
+				System.out.println("That username is taken, try another one.");
+				log.error("User tried to register profile under name: " + userInput + ", but it was taken.");
+			}
+		}while (nameTaken);
+		
+		profile.setUsername(userInput);
+		
+		
+		System.out.println("Working...");
+		
+		if(implement.addProfile(profile)) {
+			System.out.println("\n\nProfile created successfully!\n");
+			log.info("New profile created: " + profile.toString());
+		}
 	}
 	
 	public static Profile loginProfile() {
-		return null;
+		String username;
+		String password;
+		boolean usernameInDatabase;
+		Profile profile;
+		
+		System.out.println();
+		System.out.println("If you would like to leave, type \"Cancel\"");
+		
+		//Check Username
+		do {
+			do {
+				System.out.println("Please enter your username: ");
+				username = scanner.nextLine().strip().toLowerCase();
+			} while (username.equals(""));
+			
+			if(username.equals("cancel"))
+				return null;
+			usernameInDatabase = implement.usernameTaken(username);
+		}while (!usernameInDatabase);
+		
+		//Check password
+		do {
+			System.out.println("Please enter your password: ");
+			password = scanner.nextLine().strip();
+			profile = implement.findProfile(username, password);
+			
+			if(password.equals("cancel"))
+				return null;
+			else if(password.equals("")) {/*Do nothing*/}
+			else if(profile == null) {
+				System.out.println("Password does not match, please try again");
+				log.error("Wrong password was entered");
+			}
+				
+		}while(profile == null);
+		
+		profile = implement.findProfile(username);
+		
+		log.info("Login successful");
+		return profile;
 	}
 	
+	
+	
 	public static void printProfiles() {
-		ProfileDAOImplement implement = new ProfileDAOImplement();
 		List<Profile> allProfiles = implement.findAll();
 		
 		for (Profile p : allProfiles) {

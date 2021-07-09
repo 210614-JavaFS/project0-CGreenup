@@ -11,58 +11,35 @@ import com.revature.services.ServiceData;
 public class ProfileMenu {
 
 	private static Logger logger = LoggerFactory.getLogger(ProfileMenu.class);
+	private static Scanner scanner = new Scanner(System.in);
 	
-	public static void login(Scanner scanner) {
+	public static void login() {
 		ServiceData.getServiceData();
 		
 		Profile profile = null;
+		boolean loggedIn = true;
 		
-		do {
-			profile = ServiceData.loginProfile();
-			System.out.println();
+		profile = ServiceData.loginProfile();
+		
+		//If no profile is returned, the user must have canceled or there was an error.
+		//Exit the login menu and return to main menu
+		if(profile == null) {
+			logger.info("User Canceled login");
+			return;
+		}
 			
-		}while (profile == null);
 		
 		System.out.println("Welcome, " + profile.getFirstName() + ".");
 		
-		//TODO
 		//PROFILE MENU AND OPTIONS
-		boolean loggedIn = true;
 		do {
-			loggedIn = menuOptions(profile, scanner);
+			loggedIn = menuOptions(profile);
 		}while(loggedIn);
 		
 		System.out.println("Logging out...");
 	}
-
-	//TODO move this to service layer
-	//Validate the user's input
-	//Validates that the username is unique
-	//Validates that the fields are valid (IE aren't just an empty string)
-	//Once the fields have been verified, a profile is logged accessed and returned
-//	private static Profile validateUserLoginInput(Scanner scanner) {
-//		Profile profile;
-//		String username;
-//		String password;
-//		do {
-//			System.out.println("Please enter your username:\n");
-//			username = scanner.nextLine().strip();
-//		} while (username == "");
-//		
-//		do {
-//			System.out.println("Please enter your password:\n");
-//			password = scanner.nextLine().strip();
-//		} while (password == "");
-//		
-//		profile = ServiceData.loginProfile(username, password);
-//		
-//		if(profile == null) {
-//			System.out.println("Please try again.");
-//		}
-//		return profile;
-//	}
 	
-	private static boolean menuOptions(Profile profile, Scanner scanner) {
+	private static boolean menuOptions(Profile profile) {
 		//Create a String Array of the menu options
 		String[] menuOptions = {
 				"Manage Bank Accounts",

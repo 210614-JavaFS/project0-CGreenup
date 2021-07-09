@@ -27,12 +27,6 @@ public class Driver {
 			menuOptions[i] = menuOptions[i] + (i+1);
 		}
 		
-//		//These are the strings used to compare to what the user wants to do
-//		//These will be used to see if the user typed any keywords or numbers 
-//		String login = "1 Login".toLowerCase().replaceAll(" ", "");
-//		String create = "2 Create New Account".toLowerCase().replaceAll(" ", "");
-//		String exitProgram = "3 Exit Quit Leave".toLowerCase().replaceAll(" ", "");
-		
 		
 		System.out.println("Welcome to Purity Bank!\n");
 		
@@ -84,7 +78,7 @@ public class Driver {
 			ServiceData.printProfiles();
 			
 			
-			//login(scanner);
+			login();
 		}
 		//Otherwise, if the user entered anything within "create new account" call the createAccount method
 		else if (menuOptions[1].toLowerCase().contains(inputArray[0])) {
@@ -107,8 +101,8 @@ public class Driver {
 		return false;
 	}
 	
-	private static void login(Scanner scanner) {
-		ProfileMenu.login(scanner);
+	private static void login() {
+		ProfileMenu.login();
 		System.out.println();
 	}
 	

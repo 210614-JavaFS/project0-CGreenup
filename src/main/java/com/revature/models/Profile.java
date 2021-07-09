@@ -28,6 +28,7 @@ public class Profile {
 
 	public Profile() {
 		super();
+		this.accountType = AccountTypes.USER;
 	}
 
 	public String 		getFirstName() 		{return firstName;}
