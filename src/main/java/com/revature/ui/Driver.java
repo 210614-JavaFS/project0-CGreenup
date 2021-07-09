@@ -13,7 +13,7 @@ public class Driver {
 	
 	public static void main(String[] args) {
 		
-		int spacing = 5; //6
+
 		boolean wantToQuit = false;
 		Scanner scanner = new Scanner(System.in);
 		//Stretch goal, make this a hash map instead of a String array. Map string to function
@@ -38,7 +38,7 @@ public class Driver {
 		
 		while (!wantToQuit) {
 			//Print all the options the user has
-			printMainMenu(menuOptions, spacing);
+			printMenu(menuOptions);
 						
 			wantToQuit = parseInput(scanner, menuOptions);
 			System.out.println();
@@ -49,7 +49,12 @@ public class Driver {
 	}
 
 	//Prints out all of the items
-	public static void printMainMenu(String[] menuOptions, int spacing) {
+	public static void printMenu(String[] menuOptions) {
+		
+		//Spacing is used for the printing of the menu
+		//This number controls the maximum space between the number and the menu option itself
+		//IE if spacing is 5, there is a maximum of 5 spaces between [1] and "Login" in the menu
+		final int spacing = 5;
 		System.out.println("Would you like to:");
 		for(int i = 0; i < menuOptions.length; i++)
 			System.out.printf("%-"+spacing+"s %s\n", "[" + (i+1) + "]", menuOptions[i].replace("" + (i+1), ""));

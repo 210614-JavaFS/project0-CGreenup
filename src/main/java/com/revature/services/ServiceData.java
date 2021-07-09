@@ -9,6 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.revature.data.DatabaseConnector;
+import com.revature.models.AccountTypes;
+import com.revature.models.Profile;
 import com.sun.tools.sjavac.Log;
 
 public class ServiceData {
@@ -122,7 +124,7 @@ public class ServiceData {
 	//DEBUG
 	public static void printProfiles() {
 		for (Profile p : allProfiles.values()) {
-			System.out.println(p.getUsername() + " " + p.getPassword() + " " + p.getName());
+			System.out.println(p.getUsername() + " " + p.getPassword() + " " + p.getName() + ": " + p.getAccountType());
 		}
 	}
 	

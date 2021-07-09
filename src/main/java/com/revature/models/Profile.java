@@ -1,22 +1,19 @@
-package com.revature.services;
+package com.revature.models;
 
 import java.util.HashMap;
 
 public class Profile {
 
+	//Name of the profile owner
 	private String name;
 	
 	private String username;
 	private String password;
 	
+	//Account type: 
+	//	Whether the user is a customer(USER), an employee (EMPLOYEE), or admin(ADMIN)
 	private AccountTypes accountType;
 	
-	//TODO
-	//REFACTOR ADMIN PRIVELAGES
-	//MAKE IT SO EACH FUNCTION IS A BOOL
-	
-	
-	private HashMap<Integer, Account> connectedAcounts;
 
 	public Profile(String name, String username, String password, AccountTypes accountTypes) {
 		super();
@@ -24,8 +21,6 @@ public class Profile {
 		this.username = username;
 		this.password = password;
 		this.accountType = accountTypes;
-		
-		connectedAcounts = new HashMap<Integer, Account>();
 	}
 	
 	public Profile(String name, String username, String password) {
@@ -34,8 +29,10 @@ public class Profile {
 		this.username = username;
 		this.password = password;
 		this.accountType = AccountTypes.USER;
-		
-		connectedAcounts = new HashMap<Integer, Account>();
+	}
+	
+	public Profile() {
+		super();
 	}
 
 	public String getName() {
@@ -49,10 +46,6 @@ public class Profile {
 	public String getUsername() {
 		return username;
 	}
-
-	public Account getAccount(int key) {
-		return connectedAcounts.get(key);
-	}
 	
 	public void setUsername(String username) {
 		this.username = username;
@@ -65,18 +58,16 @@ public class Profile {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
-	public void addAccount(Account acc) {
-		int size = connectedAcounts.keySet().size();
-		connectedAcounts.put(size, acc);
+
+	public AccountTypes getAccountType() {
+		return accountType;
+	}
+
+	//This should only be accessible to admins
+	public void setAccountType(AccountTypes accountType) {
+		this.accountType = accountType;
 	}
 	
 	
-	//debug
-	public void printConnectedAccounts() {
-		for (Account a: connectedAcounts.values()) {
-			System.out.println(a.getAccountType() + ": " + a.getAccountName() + " " + a.getBalance());
-		}
-	}
 	
 }

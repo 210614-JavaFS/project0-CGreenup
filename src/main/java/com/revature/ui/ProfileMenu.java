@@ -1,12 +1,11 @@
 package com.revature.ui;
 
-import java.lang.reflect.Method;
 import java.util.Scanner;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.revature.services.Profile;
+import com.revature.models.Profile;
 import com.revature.services.ServiceData;
 
 public class ProfileMenu {
@@ -19,7 +18,7 @@ public class ProfileMenu {
 		Profile profile = null;
 		
 		do {
-			profile = validateUserInput(scanner);
+			profile = validateUserLoginInput(scanner);
 			
 			System.out.println();
 			
@@ -41,7 +40,7 @@ public class ProfileMenu {
 	//Validates that the username is unique
 	//Validates that the fields are valid (IE aren't just an empty string)
 	//Once the fields have been verified, a profile is logged accessed and returned
-	private static Profile validateUserInput(Scanner scanner) {
+	private static Profile validateUserLoginInput(Scanner scanner) {
 		Profile profile;
 		String username;
 		String password;
@@ -77,7 +76,7 @@ public class ProfileMenu {
 			menuOptions[i] = menuOptions[i] + (i+1);
 		}
 		
-		Driver.printMainMenu(menuOptions, 5);
+		Driver.printMenu(menuOptions);
 		System.out.println("");
 		
 		String userInput;
@@ -94,7 +93,11 @@ public class ProfileMenu {
 		if (userInput.equals("")) {
 			logger.info("User entered nothing");
 		}
-		
+		//If the user wants to manage accounts, call the lookAtAccount() method
+		else if(menuOptions[0].toLowerCase().contains(userInput)) {
+			logger.info(profile.getName() + " applied for a new account.");
+			applyForAccount(profile);
+		}
 		//If the user wants to apply for a new account, call the applyForAccount() method
 		else if(menuOptions[1].toLowerCase().contains(userInput)) {
 			logger.info(profile.getName() + " applied for a new account.");

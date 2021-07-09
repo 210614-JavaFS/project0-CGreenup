@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.revature.services.Account;
+import com.revature.models.Account;
 import com.revature.services.NegativeAccountException;
 
 

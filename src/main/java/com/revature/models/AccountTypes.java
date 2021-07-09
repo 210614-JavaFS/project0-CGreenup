@@ -1,4 +1,4 @@
-package com.revature.services;
+package com.revature.models;
 
 public enum AccountTypes {
 	USER,
