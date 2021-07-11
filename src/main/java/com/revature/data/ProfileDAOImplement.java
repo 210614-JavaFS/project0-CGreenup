@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 
 import com.revature.models.AccountTypes;
 import com.revature.models.Profile;
+import com.revature.utilities.ConnectionUtil;
 
 
 public class ProfileDAOImplement implements ProfileDAO {
@@ -160,10 +161,39 @@ try(Connection conn = ConnectionUtil.getConnection()){
 	
 	//TODO
 	@Override
-	public boolean updateProfile(Profile profile) {
+	public boolean updateProfile(Profile profile, String username) {
 		
 		try(Connection conn = ConnectionUtil.getConnection()){
-			String sql = ""	;		
+			String sql = "UPDATE profile SET "
+					+ "first_name = ?, "
+					+ "last_name = ?, "
+					+ "user_pass = ?, "
+					+ "user_level = ?, "
+					+ "WHERE user_name = ?"	;
+			
+			PreparedStatement statement = conn.prepareStatement(sql);
+			
+			int index = 0;
+			statement.setString(++index, profile.getFirstName());
+			statement.setString(++index, profile.getLastName());
+			statement.setString(++index, profile.getPassword());			
+			
+			switch(profile.getAccountType()) {
+			case ADMIN:
+				statement.setString(++index, "ADM");
+				break;
+			case EMPLOYEE:
+				statement.setString(++index, "EMP");
+				break;
+			case USER:
+			default:
+				statement.setString(++index, "USE");
+				break;
+			}
+			
+			statement.setString(++index, profile.getUsername());
+			
+			statement.execute();
 			
 		}catch(SQLException e) {
 			log.error("Tried to update profile, ran into SQLException");
