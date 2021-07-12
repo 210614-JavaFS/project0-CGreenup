@@ -12,7 +12,8 @@ public class Driver {
 	public static Logger log = LoggerFactory.getLogger(Driver.class);
 	
 	public static void main(String[] args) {
-		
+		log.info("===============================================\n");
+		log.info("Program Start");
 
 		boolean wantToQuit = false;
 		Scanner scanner = new Scanner(System.in);
@@ -38,8 +39,12 @@ public class Driver {
 			System.out.println();
 		}
 		
+		System.out.println("Exiting Program");
+		
 		scanner.close();
 		
+		log.info("Program ended cleanly\n");
+		log.info("===============================================");
 	}
 
 	//Prints out all of the items

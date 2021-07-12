@@ -65,10 +65,6 @@ public class AccountServiceData {
 	
 	
 	
-	
-	
-	
-	
 	//debug
 	public static void printAllAccounts(){
 		for(Account i : aImplement.findAll()) {

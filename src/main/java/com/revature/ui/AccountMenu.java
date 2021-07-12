@@ -10,7 +10,6 @@ import com.revature.services.AccountServiceData;
 public class AccountMenu {
 	private static Scanner scanner = new Scanner(System.in);
 	
-	//TODO
 	public void manageAccounts(Profile profile) {
 		AccountServiceData.getServiceData();
 		final int spacing = 5;
