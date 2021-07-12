@@ -22,7 +22,7 @@ public class AccountTest {
 		name = "John Smith";
 		accountType = "Checking";
 		balance = 2000;
-		acc = new Account(0, null, null, accountType, balance);
+		acc = new Account(0, null, null, accountType, balance, false);
 	}
 	
 	@BeforeEach
@@ -30,7 +30,7 @@ public class AccountTest {
 		name = "John Smith";
 		accountType = "Checking";
 		balance = 2000;
-		acc = new Account(0, null, null, accountType, balance);
+		acc = new Account(0, null, null, accountType, balance, false);
 	}
 	
 	

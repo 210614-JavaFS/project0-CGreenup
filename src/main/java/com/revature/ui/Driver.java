@@ -5,7 +5,7 @@ import java.util.Scanner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.revature.services.ServiceData;
+import com.revature.services.ProfileServiceData;
 
 public class Driver {
 
@@ -74,8 +74,8 @@ public class Driver {
 		//Otherwise, if the user entered anything within login, call the login method
 		else if(menuOptions[0].toLowerCase().contains(inputArray[0])) {
 			//DEBUG
-			ServiceData.getServiceData();
-			ServiceData.printProfiles();
+			ProfileServiceData.getServiceData();
+			ProfileServiceData.printProfiles();
 			
 			
 			login();
@@ -83,8 +83,8 @@ public class Driver {
 		//Otherwise, if the user entered anything within "create new account" call the createAccount method
 		else if (menuOptions[1].toLowerCase().contains(inputArray[0])) {
 			//DEBUG
-			ServiceData.getServiceData();
-			ServiceData.printProfiles();
+			ProfileServiceData.getServiceData();
+			ProfileServiceData.printProfiles();
 			
 			createAccount();
 		}
@@ -107,8 +107,8 @@ public class Driver {
 	}
 	
 	private static void createAccount() {
-		ServiceData.getServiceData();
-		ServiceData.createProfile();
+		ProfileServiceData.getServiceData();
+		ProfileServiceData.createProfile();
 		System.out.println();
 	}
 	

@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.revature.models.Profile;
-import com.revature.services.ServiceData;
+import com.revature.services.ProfileServiceData;
 
 public class ProfileMenu {
 
@@ -14,12 +14,12 @@ public class ProfileMenu {
 	private static Scanner scanner = new Scanner(System.in);
 	
 	public static void login() {
-		ServiceData.getServiceData();
+		ProfileServiceData.getServiceData();
 		
 		Profile profile = null;
 		boolean loggedIn = true;
 		
-		profile = ServiceData.loginProfile();
+		profile = ProfileServiceData.loginProfile();
 		
 		//If no profile is returned, the user must have canceled or there was an error.
 		//Exit the login menu and return to main menu
@@ -70,10 +70,10 @@ public class ProfileMenu {
 		if (userInput.equals("")) {
 			logger.info("User entered nothing");
 		}
-		//If the user wants to manage accounts, call the lookAtAccount() method
+		//If the user wants to manage accounts, call the manageAccount() method
 		else if(menuOptions[0].toLowerCase().contains(userInput)) {
 			logger.info(profile.getFirstName() + " applied for a new account.");
-			lookAtAccounts(profile);
+			manageAccounts(profile);
 		}
 		//If the user wants to apply for a new account, call the applyForAccount() method
 		else if(menuOptions[1].toLowerCase().contains(userInput)) {
@@ -95,13 +95,13 @@ public class ProfileMenu {
 	}
 	
 	private static void applyForAccount(Profile profile) {
-		//TODO display accounts applied for
-		//
+		
 		
 	}
 
-	private static void lookAtAccounts(Profile profile) {
-		
+	private static void manageAccounts(Profile profile) {
+		AccountMenu accountMenu = new AccountMenu();
+		accountMenu.manageAccounts(profile);
 	}
 	
 }

@@ -13,17 +13,19 @@ public class Account {
 	private String accountType;
 	private double balance;
 	private int id;
+	private boolean isApplication;
 	Logger log = LoggerFactory.getLogger(Account.class);
 	
 	public Account() {
 		super();
 	}
-	public Account(int id, Profile owner, String accountName, String accountType, double balance) {
+	public Account(int id, Profile owner, String accountName, String accountType, double balance, boolean isApplication) {
 		super();
 		this.owner = owner;
 		this.accountName = accountName;
 		this.accountType = accountType;
 		this.balance = balance;
+		this.isApplication = isApplication;
 	}
 	//Getters
 	public String 	getAccountName() 		{ return accountName; 	}
@@ -31,12 +33,14 @@ public class Account {
 	public double 	getBalance() 			{ return balance; 		}
 	public Profile 	getOwner()				{ return owner;			}	
 	public int 		getId() 				{ return id;			}
+	public boolean	getIsApplication()		{ return isApplication;	}
 
 	//Setters
 	public void setAccountName(String name) 		{ this.accountName = name;			}
 	public void setAccountType(String accountType) 	{ this.accountType = accountType; 	}
 	public void setOwner(Profile owner) 			{ this.owner = owner; 				}	
 	public void setId(int id) 						{ this.id = id;						}
+	public void setIsApplication(boolean bool)		{ this.isApplication = bool;		}	
 	
 	
 	//Changes the balance of the account
@@ -62,8 +66,8 @@ public class Account {
 	}
 	@Override
 	public String toString() {
-		return "Account [owner=" + owner + ", accountName=" + accountName + ", accountType=" + accountType
-				+ ", balance=" + balance + ", id=" + id + "]";
+		return "Account [owner = " + owner + ", accountName = " + accountName + ", accountType = " + accountType
+				+ ", balance = " + balance + ", id = " + id + "]";
 	}
 	@Override
 	public int hashCode() {

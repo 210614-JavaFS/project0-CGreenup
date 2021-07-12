@@ -12,4 +12,6 @@ public interface AccountDAO {
 	public boolean updateAccount(Account acc, int index);
 	public boolean addAccount(Account acc);
 	public boolean removeAccount(Account acc);
+	
+	public List<Account> findAllApplications();
 }

@@ -9,31 +9,26 @@ import org.slf4j.LoggerFactory;
 import com.revature.data.ProfileDAOImplement;
 import com.revature.models.Profile;
 
-public class ServiceData {
+public class ProfileServiceData {
 
-	public static Logger log = LoggerFactory.getLogger(ServiceData.class);
-	private static ProfileDAOImplement implement = new ProfileDAOImplement();
+	private static Logger log = LoggerFactory.getLogger(ProfileServiceData.class);
+	private static ProfileDAOImplement implement;
 	
-	private static ServiceData serviceData = null;
-	private static Scanner scanner = new Scanner(System.in);
+	private static ProfileServiceData serviceData = null;
+	private static Scanner scanner;
 	
 	//Constructor for the singleton
-	private ServiceData() {
-		initializeProfiles();
+	private ProfileServiceData() {
+		super();
+		ProfileServiceData.implement = new ProfileDAOImplement();
+		ProfileServiceData.scanner = new Scanner(System.in);
 	}
+
 	
-	//Initialize Profiles
-	//Gets all the profiles in the database and stores them into the allProfiles Map
-	private void initializeProfiles() {
-		//TODO
-		//Get database connection
-		//Put all the profiles in the list
-	}
-	
-	public static ServiceData getServiceData() {
+	public static ProfileServiceData getServiceData() {
 		if (serviceData == null) {
-			log.info("created service data instance.");
-			serviceData = new ServiceData();
+			log.info("created profile service data instance.");
+			serviceData = new ProfileServiceData();
 		}
 		return serviceData;
 	}

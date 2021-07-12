@@ -40,7 +40,8 @@ public class AccountDAOImplement implements AccountDAO {
 						accMaker, 
 						result.getString("account_name"), 
 						result.getString("account_type"), 
-						result.getDouble("balance"));	
+						result.getDouble("balance"), 
+						result.getBoolean("is_application"));	
 				list.add(acc);
 			}
 			
@@ -59,7 +60,7 @@ public class AccountDAOImplement implements AccountDAO {
 	@Override
 	public List<Account> findAll(String username) {
 		try(Connection conn = ConnectionUtil.getConnection()){
-			String sql = "SELECT * FROM account WHERE account_owner = ?;";
+			String sql = "SELECT * FROM account WHERE account_maker = ?;";
 			
 			PreparedStatement statement = conn.prepareStatement(sql);
 
@@ -79,7 +80,8 @@ public class AccountDAOImplement implements AccountDAO {
 						accMaker, 
 						result.getString("account_name"), 
 						result.getString("account_type"), 
-						result.getDouble("balance"));	
+						result.getDouble("balance"), 
+						result.getBoolean("is_application"));
 				list.add(acc);
 			}
 			
@@ -103,7 +105,8 @@ public class AccountDAOImplement implements AccountDAO {
 					+ "account_name = ?, "
 					+ "account_type = ?, "
 					+ "balance = ?, "
-					+ "account_hash = ? "
+					+ "account_hash = ?,"
+					+ "is_application = ? "
 					+ "WHERE "
 					+ "account_id = ?;";	
 			
@@ -115,6 +118,7 @@ public class AccountDAOImplement implements AccountDAO {
 			statement.setString(++statementIndex, acc.getAccountType());
 			statement.setDouble(++statementIndex, acc.getBalance());
 			statement.setInt(++statementIndex, acc.hashCode());
+			statement.setBoolean(++statementIndex, acc.getIsApplication());
 			statement.setInt(++statementIndex, acc.getId());
 			
 			return true;
@@ -187,11 +191,12 @@ public class AccountDAOImplement implements AccountDAO {
 				Profile accMaker;
 				accMaker = implement.findProfile(result.getString("account_maker"));
 				acc = new Account(
-						result.getInt(accountId),
+						result.getInt("account_id"),
 						accMaker, 
 						result.getString("account_name"), 
 						result.getString("account_type"), 
-						result.getDouble("balance"));		
+						result.getDouble("balance"), 
+						result.getBoolean("is_application"));		
 			
 			}
 			
@@ -224,6 +229,43 @@ public class AccountDAOImplement implements AccountDAO {
 		}
 		
 		return 0;
+	}
+
+	@Override
+	public List<Account> findAllApplications() {
+		try(Connection conn = ConnectionUtil.getConnection()){
+			String sql = "SELECT * FROM account WHERE is_application = TRUE";
+			
+			Statement statement = conn.createStatement();
+			
+			ResultSet result = statement.executeQuery(sql);
+			
+			List<Account> list = new ArrayList<Account>();
+			
+			while(result.next()) {				
+				ProfileDAOImplement implement = new ProfileDAOImplement();
+				
+				Profile accMaker;
+				accMaker = implement.findProfile(result.getString("account_maker"));
+				Account acc = new Account(
+						result.getInt("account_id"),
+						accMaker, 
+						result.getString("account_name"), 
+						result.getString("account_type"), 
+						result.getDouble("balance"), 
+						result.getBoolean("is_application"));	
+				list.add(acc);
+			}
+			
+			
+			return list;
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
+		
+		return null;
 	}
 
 }
