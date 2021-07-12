@@ -12,25 +12,32 @@ public class Account {
 	private String accountName;
 	private String accountType;
 	private double balance;
+	private int id;
 	Logger log = LoggerFactory.getLogger(Account.class);
 	
-	public Account(String name, String accountType, double balance) {
+	public Account() {
 		super();
-		this.accountName = name;
+	}
+	public Account(int id, Profile owner, String accountName, String accountType, double balance) {
+		super();
+		this.owner = owner;
+		this.accountName = accountName;
 		this.accountType = accountType;
 		this.balance = balance;
 	}
-	
 	//Getters
-	public String getAccountName() 		{ return accountName; 	}
-	public String getAccountType() 		{ return accountType; 	}
-	public double getBalance() 			{ return balance; 		}
-	public Profile getOwner()			{ return owner;			}
+	public String 	getAccountName() 		{ return accountName; 	}
+	public String 	getAccountType() 		{ return accountType; 	}
+	public double 	getBalance() 			{ return balance; 		}
+	public Profile 	getOwner()				{ return owner;			}	
+	public int 		getId() 				{ return id;			}
 
 	//Setters
-	public void setAccountName(String name) 		{ this.accountName = name;	}
-	public void setAccountType(String accountType) 	{ this.accountType = accountType; }
-	public void setOwner(Profile owner) 			{ this.owner = owner; }
+	public void setAccountName(String name) 		{ this.accountName = name;			}
+	public void setAccountType(String accountType) 	{ this.accountType = accountType; 	}
+	public void setOwner(Profile owner) 			{ this.owner = owner; 				}	
+	public void setId(int id) 						{ this.id = id;						}
+	
 	
 	//Changes the balance of the account
 	//Positive change signifies a deposit
@@ -53,5 +60,48 @@ public class Account {
 	public static double roundToTwo(double input) {
 		return (double) (Math.round(input * 100.0) / 100.0);
 	}
+	@Override
+	public String toString() {
+		return "Account [owner=" + owner + ", accountName=" + accountName + ", accountType=" + accountType
+				+ ", balance=" + balance + ", id=" + id + "]";
+	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((accountName == null) ? 0 : accountName.hashCode());
+		result = prime * result + ((accountType == null) ? 0 : accountType.hashCode());
+		result = prime * result + ((owner == null) ? 0 : owner.hashCode());
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Account other = (Account) obj;
+		if (accountName == null) {
+			if (other.accountName != null)
+				return false;
+		} else if (!accountName.equals(other.accountName))
+			return false;
+		if (accountType == null) {
+			if (other.accountType != null)
+				return false;
+		} else if (!accountType.equals(other.accountType))
+			return false;
+		if (owner == null) {
+			if (other.owner != null)
+				return false;
+		} else if (!owner.equals(other.owner))
+			return false;
+		return true;
+	}
+
+	
+	
 	
 }

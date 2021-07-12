@@ -22,18 +22,15 @@ public class AccountTest {
 		name = "John Smith";
 		accountType = "Checking";
 		balance = 2000;
-		acc = new Account(name, accountType, balance);
+		acc = new Account(0, null, null, accountType, balance);
 	}
-	
-	
-	
 	
 	@BeforeEach
 	public void initialize() {
 		name = "John Smith";
 		accountType = "Checking";
 		balance = 2000;
-		acc = new Account(name, accountType, balance);
+		acc = new Account(0, null, null, accountType, balance);
 	}
 	
 	

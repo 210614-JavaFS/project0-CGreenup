@@ -158,8 +158,6 @@ try(Connection conn = ConnectionUtil.getConnection()){
 		return null;
 	}
 
-	
-	//TODO
 	@Override
 	public boolean updateProfile(Profile profile, String username) {
 		
@@ -168,8 +166,8 @@ try(Connection conn = ConnectionUtil.getConnection()){
 					+ "first_name = ?, "
 					+ "last_name = ?, "
 					+ "user_pass = ?, "
-					+ "user_level = ?, "
-					+ "WHERE user_name = ?"	;
+					+ "user_level = ? "
+					+ "WHERE user_name = ?;";
 			
 			PreparedStatement statement = conn.prepareStatement(sql);
 			
@@ -192,6 +190,8 @@ try(Connection conn = ConnectionUtil.getConnection()){
 			}
 			
 			statement.setString(++index, profile.getUsername());
+			
+			//log.debug(statement.toString());
 			
 			statement.execute();
 			
@@ -265,7 +265,7 @@ try(Connection conn = ConnectionUtil.getConnection()){
 				return true;
 			
 		}catch(SQLException e) {
-			log.error("Tried to check username, ran into SQLException.");
+			log.error("Tried to check username, ran into SQLException.\n");
 			e.printStackTrace();
 		}
 		return false;
