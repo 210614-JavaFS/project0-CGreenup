@@ -1,6 +1,5 @@
 package com.revature.services;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -32,15 +31,21 @@ public class AccountServiceData {
 
 	//apply for account
 	//TODO
-	public static boolean applyForAccount(Profile profile) {
-		
-		
+	public static boolean applyForAccount(Account account) {
+		log.info("User Applied for account");
+		if(aImplement.findId(account) == 0) {
+			aImplement.addAccount(account);
+			log.info("Account application successful");
+			return true;
+		}
+		log.error("Account Application unsuccessful");
 		return false;
 	}
 	
 	
 	//Look at accounts
 	public static List<Account> getConnectedAccounts(Profile profile) {
+		log.info("User: " + profile.getUsername() + " looked at all their accounts.\ngetConnectedAccounts() called in AccountService.java");
 		List<Account> allAccounts = aImplement.findAll(profile.getUsername());
 		
 		return allAccounts;

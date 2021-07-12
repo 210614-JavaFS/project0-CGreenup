@@ -18,6 +18,7 @@ public class Account {
 	
 	public Account() {
 		super();
+		balance = 0.00;
 	}
 	public Account(int id, Profile owner, String accountName, String accountType, double balance, boolean isApplication) {
 		super();

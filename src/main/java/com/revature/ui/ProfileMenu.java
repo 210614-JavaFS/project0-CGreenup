@@ -95,8 +95,8 @@ public class ProfileMenu {
 	}
 	
 	private static void applyForAccount(Profile profile) {
-		
-		
+		AccountMenu accountMenu = new AccountMenu();
+		accountMenu.applyForAccount(profile);
 	}
 
 	private static void manageAccounts(Profile profile) {
