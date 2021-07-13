@@ -1,6 +1,7 @@
 package com.revature.services;
 
 import java.util.List;
+import java.util.Scanner;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -142,5 +143,23 @@ public class AccountServiceData {
 		for(Account i : aImplement.findAll()) {
 			System.out.println(i.toString());
 		}
+	}
+	
+	public static boolean deleteAccount(Account account) {
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("Are you sure you want to delete this account? (y/n)");
+		String userInput = "";
+		do {
+			userInput = scanner.nextLine().strip().toLowerCase();
+		}while(!"yes".contains(userInput) && !"no".contains(userInput));
+		
+		if(userInput.equals("no")) {
+			log.info("admin did not delete account");
+			return false;
+		}else {
+			log.info("Admin decided to delte account: " + account.toString());
+			return aImplement.removeAccount(account);
+		}
+		
 	}
 }

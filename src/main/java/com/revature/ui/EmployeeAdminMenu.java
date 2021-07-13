@@ -60,14 +60,13 @@ public class EmployeeAdminMenu {
 						crossProfileTransfer();
 						break;
 					}
-					else if(s.contains("Cancel Accounts")) {
+					else if(s.contains("Cancel")) {
 						
-						Account accountToDelete = selectAccount("Enter the username of the account to delete");
-						
+						deleteAccount();
 						break;
 					}
 					else if(s.contains("Applications")) {
-						System.out.println("applic");
+						
 						break;
 					}
 					else if(s.contains("View")) {
@@ -89,6 +88,16 @@ public class EmployeeAdminMenu {
 		}while(!validInput);
 		
 		 
+	}
+
+	private static void deleteAccount() {
+		Account accountToDelete = selectAccount("Enter the username of the account to delete");
+		AccountServiceData.getServiceData();
+		if( AccountServiceData.deleteAccount(accountToDelete)) {
+			System.out.println("Account deleted successfully");
+		}else {
+			System.out.println("Account deletion canceled");
+		}
 	}
 
 	private static void crossProfileTransfer() {
