@@ -16,9 +16,9 @@ import com.revature.models.Profile;
 import com.revature.utilities.ConnectionUtil;
 
 
-public class ProfileDAOImplement implements ProfileDAO {
+public class ProfileDAOImpl implements ProfileDAO {
 
-	Logger log = LoggerFactory.getLogger(ProfileDAOImplement.class);
+	Logger log = LoggerFactory.getLogger(ProfileDAOImpl.class);
 	
 	@Override
 	public List<Profile> findAll() {

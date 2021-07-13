@@ -50,8 +50,19 @@ public class AccountMenu {
 						}while(transactionInput.equals(""));
 						
 						for(String s : menuOptions) {
-							if (s.contains(transactionInput)) {
-								
+							if (s.toLowerCase().contains(transactionInput)) {
+								if(s.contains("Transfer")) {
+									transfer(managedAccount, validAccounts);
+									break;
+								}
+								else if(s.contains("Deposit")) {
+									deposit(managedAccount);
+									break;
+								}
+								else if(s.contains("Withdraw")) {
+									withdraw(managedAccount);
+									break;
+								}
 							}
 						}
 						
@@ -213,4 +224,60 @@ public class AccountMenu {
 		}
 	}
 	
+	private void transfer(Account account, List<Account> validAccounts) {
+		validAccounts.remove(account);
+		
+		System.out.println("Please select the number corresponding to the account you would like to transfer money to:");
+		
+		final int spacing = 5;		
+		
+		for(int i = 0; i < validAccounts.size(); i++){
+			Account acc = validAccounts.get(i);
+			String varString;
+			varString = validAccounts.get(i).getAccountType();
+			System.out.printf("%-"+spacing+"s %-"+ spacing*2 +"s %-" + spacing*3 +"s %s \n", (i+1) + ")", acc.getBalance(), varString, acc.getAccountName());
+		}
+		
+		int userIntput = 0;
+		
+		boolean validInput = false;
+		do {
+			try {
+				userIntput = scanner.nextInt();
+				
+				if(userIntput > validAccounts.size() || userIntput < 1) {
+					throw new NumberFormatException("That number is too big or small");
+				}
+				validInput=true; 
+			}catch(NumberFormatException e) {
+				System.out.println("That isn't a valid option");
+			}
+		}while(!validInput);
+		
+		Account transferToAccount = validAccounts.get(userIntput-1);
+		
+		System.out.println("How much money would you like to transfer to that account?");
+		double funds = 0;
+		validInput = false;
+		double newBalance;
+		do {
+			try {
+				funds = scanner.nextDouble();
+				
+				if(funds < 0)
+					throw new NumberFormatException("Input cannot be negative");
+				validInput = true;
+			}catch(NumberFormatException e) {
+				System.out.println("Invalid Input");
+			}
+		}while(!validInput);
+		
+		AccountServiceData.getServiceData();
+		if( AccountServiceData.transferFunds(account, transferToAccount, funds)) {
+			System.out.println("Transfer successful.");
+		}else {
+			System.out.println("Transfer not successful.");
+		}
+		
+	}
 }

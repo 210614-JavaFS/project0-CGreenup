@@ -5,20 +5,20 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.revature.data.AccountDAOImplement;
+import com.revature.data.AccountDAOImpl;
 import com.revature.models.Account;
 import com.revature.models.Profile;
 
 public class AccountServiceData {
 	private static AccountServiceData serviceData = null;
-	private static AccountDAOImplement aImplement;
+	private static AccountDAOImpl aImplement;
 	private static Logger log = LoggerFactory.getLogger(AccountServiceData.class);
 	
 	
 		
 	private AccountServiceData() {
 		super();
-		aImplement = new AccountDAOImplement();
+		aImplement = new AccountDAOImpl();
 	}
 	
 	public static AccountServiceData getServiceData() {
@@ -62,11 +62,9 @@ public class AccountServiceData {
 			log.info(account.getOwner() + " successfully desposited funds to account");
 			return account.getBalance();
 		} catch (NegativeAccountException e) {
-			// TODO Auto-generated catch block
+
+			log.error("Could not fulfill " + account.getOwner() + "'s deposit request");
 			e.printStackTrace();
-		}
-		finally {
-		log.error("Could not fulfill " + account.getOwner() + "'s deposit request");
 		}
 		return -1;
 	}
@@ -81,12 +79,9 @@ public class AccountServiceData {
 			log.info(account.getOwner() + " successfully withdrew funds from account");
 			return account.getBalance();
 		} catch (NegativeAccountException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}		
-		finally {
 			log.error("Could not fulfill " + account.getOwner() + "'s withdraw request");
-			}
+			e.printStackTrace();
+		}
 		return -1;
 	}
 	

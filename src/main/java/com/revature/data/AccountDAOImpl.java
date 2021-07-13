@@ -15,33 +15,37 @@ import com.revature.models.Account;
 import com.revature.models.Profile;
 import com.revature.utilities.ConnectionUtil;
 
-public class AccountDAOImplement implements AccountDAO {
-	Logger log = LoggerFactory.getLogger(AccountDAOImplement.class);
+public class AccountDAOImpl implements AccountDAO {
+	Logger log = LoggerFactory.getLogger(AccountDAOImpl.class);
+	
 	
 	
 	@Override
 	public List<Account> findAll() {
 		try(Connection conn = ConnectionUtil.getConnection()){
-			String sql = "SELECT * FROM account";
+			String sql = "SELECT * FROM account WHERE account_maker = ?;";
 			
-			Statement statement = conn.createStatement();
+			PreparedStatement statement = conn.prepareStatement(sql);
 			
 			ResultSet result = statement.executeQuery(sql);
+			ResultSet keys = statement.getGeneratedKeys();
 			
 			List<Account> list = new ArrayList<Account>();
 			
-			while(result.next()) {				
-				ProfileDAOImplement implement = new ProfileDAOImplement();
+			while(result.next()) {
+				keys.next();
+				ProfileDAOImpl implement = new ProfileDAOImpl();
 				
 				Profile accMaker;
 				accMaker = implement.findProfile(result.getString("account_maker"));
 				Account acc = new Account(
-						result.getInt("account_id"),
+						-1,
 						accMaker, 
 						result.getString("account_name"), 
 						result.getString("account_type"), 
 						result.getDouble("balance"), 
-						result.getBoolean("is_application"));	
+						result.getBoolean("is_application"));
+				acc.setId(findId(acc));
 				list.add(acc);
 			}
 			
@@ -62,26 +66,27 @@ public class AccountDAOImplement implements AccountDAO {
 		try(Connection conn = ConnectionUtil.getConnection()){
 			String sql = "SELECT * FROM account WHERE account_maker = ?;";
 			
-			PreparedStatement statement = conn.prepareStatement(sql);
+			PreparedStatement statement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
 			statement.setString(1, username);
 			
 			ResultSet result = statement.executeQuery();
-			
 			List<Account> list = new ArrayList<Account>();
-						
+			
 			while(result.next()) {
-				ProfileDAOImplement implement = new ProfileDAOImplement();
+				ProfileDAOImpl implement = new ProfileDAOImpl();
 				
 				Profile accMaker;
 				accMaker = implement.findProfile(result.getString("account_maker"));
 				Account acc = new Account(
-						result.getInt("account_id"),
+						-1,
 						accMaker, 
 						result.getString("account_name"), 
 						result.getString("account_type"), 
 						result.getDouble("balance"), 
 						result.getBoolean("is_application"));
+				acc.setId(findId(acc));
+				log.debug(acc.toString());
 				list.add(acc);
 			}
 			
@@ -120,6 +125,10 @@ public class AccountDAOImplement implements AccountDAO {
 			statement.setInt(++statementIndex, acc.hashCode());
 			statement.setBoolean(++statementIndex, acc.getIsApplication());
 			statement.setInt(++statementIndex, acc.getId());
+			
+			statement.execute();
+			
+			log.debug(statement.toString());
 			
 			return true;
 			
@@ -186,7 +195,7 @@ public class AccountDAOImplement implements AccountDAO {
 			
 			//ResultSets have a cursor; like how a Scanner has a cursor
 			while(result.next()) {
-				ProfileDAOImplement implement = new ProfileDAOImplement();
+				ProfileDAOImpl implement = new ProfileDAOImpl();
 				
 				Profile accMaker;
 				accMaker = implement.findProfile(result.getString("account_maker"));
@@ -243,7 +252,7 @@ public class AccountDAOImplement implements AccountDAO {
 			List<Account> list = new ArrayList<Account>();
 			
 			while(result.next()) {				
-				ProfileDAOImplement implement = new ProfileDAOImplement();
+				ProfileDAOImpl implement = new ProfileDAOImpl();
 				
 				Profile accMaker;
 				accMaker = implement.findProfile(result.getString("account_maker"));

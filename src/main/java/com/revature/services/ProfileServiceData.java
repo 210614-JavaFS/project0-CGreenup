@@ -6,13 +6,13 @@ import java.util.Scanner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.revature.data.ProfileDAOImplement;
+import com.revature.data.ProfileDAOImpl;
 import com.revature.models.Profile;
 
 public class ProfileServiceData {
 
 	private static Logger log = LoggerFactory.getLogger(ProfileServiceData.class);
-	private static ProfileDAOImplement implement;
+	private static ProfileDAOImpl implement;
 	
 	private static ProfileServiceData serviceData = null;
 	private static Scanner scanner;
@@ -20,7 +20,7 @@ public class ProfileServiceData {
 	//Constructor for the singleton
 	private ProfileServiceData() {
 		super();
-		ProfileServiceData.implement = new ProfileDAOImplement();
+		ProfileServiceData.implement = new ProfileDAOImpl();
 		ProfileServiceData.scanner = new Scanner(System.in);
 	}
 

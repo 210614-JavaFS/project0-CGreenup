@@ -5,16 +5,16 @@ import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.revature.data.AccountDAOImplement;
-import com.revature.data.ProfileDAOImplement;
+import com.revature.data.AccountDAOImpl;
+import com.revature.data.ProfileDAOImpl;
 import com.revature.models.Account;
 import com.revature.models.AccountTypes;
 import com.revature.models.Profile;
 
 public class DAOTest {
 
-	public static AccountDAOImplement accImpl = new AccountDAOImplement();
-	public static ProfileDAOImplement impl = new ProfileDAOImplement();
+	public static AccountDAOImpl accImpl = new AccountDAOImpl();
+	public static ProfileDAOImpl impl = new ProfileDAOImpl();
 	public static Profile testProfile;
 	public static Account testAccount;
 	Logger log = LoggerFactory.getLogger(DAOTest.class);
