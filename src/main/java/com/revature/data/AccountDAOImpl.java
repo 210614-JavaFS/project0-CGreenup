@@ -23,7 +23,7 @@ public class AccountDAOImpl implements AccountDAO {
 	@Override
 	public List<Account> findAll() {
 		try(Connection conn = ConnectionUtil.getConnection()){
-			String sql = "SELECT * FROM account WHERE account_maker = ?;";
+			String sql = "SELECT * FROM account;";
 			
 			PreparedStatement statement = conn.prepareStatement(sql);
 			

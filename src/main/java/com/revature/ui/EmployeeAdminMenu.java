@@ -56,7 +56,7 @@ public class EmployeeAdminMenu {
 			for(String s: menuOptions) {
 				if(s.toLowerCase().contains(userInput)) {
 					if(s.contains("Manage")) {
-						AccountMenu.manageAccounts(selectProfile("Enter the username of the accounts"));
+						AccountMenu.manageAccounts(selectProfileWithAccounts("Enter the username of the accounts"));
 						
 					}
 					else if(s.contains("Transfer funds between")) {
@@ -73,7 +73,16 @@ public class EmployeeAdminMenu {
 						break;
 					}
 					else if(s.contains("View")) {
-						
+						Profile inspectedProfile = selectProfile("Select a user to inspect");
+						if (inspectedProfile != null) {
+							System.out.println("User's information:");
+							System.out.println("================================");
+							System.out.printf("%-18s %s\n", "First Name: ", inspectedProfile.getFirstName());
+							System.out.printf("%-18s %s\n", "Last Name: ", inspectedProfile.getLastName());
+							System.out.printf("%-18s %s\n", "Username: ", inspectedProfile.getUsername());
+							System.out.printf("%-18s %s\n", "Password: ", inspectedProfile.getPassword());
+							System.out.printf("%-18s %s\n", "Account Level: ", inspectedProfile.getAccountType().toString());
+						}
 						break;
 					}
 					else if(s.contains("Quit")) {
@@ -176,6 +185,54 @@ public class EmployeeAdminMenu {
 		log.debug("SelectProfile Started");
 		Profile profile = null;
 		ProfileServiceData.getServiceData();
+		List<Profile> allProfiles = ProfileServiceData.getAllProfiles();
+		
+		System.out.println(prompt);
+		
+		printAllProfiles(allProfiles);
+		
+		
+		//getUserInput
+		Scanner scanner = new Scanner(System.in);
+		String userInput = null;
+		
+		boolean validInput = false;
+		while(!validInput) {
+			userInput = scanner.nextLine().toLowerCase().strip();
+			if(userInput.length() > 0) {
+				userInput = userInput.split(" ")[0];
+			}			
+			int test;
+			if(userInput.equals("")) {
+				System.out.println("Please enter a username.");
+			}
+			else if(userInput.matches("\\d+")) {
+				test = Integer.parseInt(userInput);
+				if(test <= allProfiles.size() && test > 0) {
+					return allProfiles.get(test - 1);
+				}
+				else {
+					System.out.println("That number is not within the range, please try again.");
+				}
+			}
+			else if(ProfileServiceData.checkUsername(userInput)) {
+				validInput = true;
+			}else {
+				System.out.println("That username was not found, please try again.");
+			}
+		}
+		
+		ProfileServiceData.getServiceData();
+		profile = ProfileServiceData.findProfile(userInput);
+		
+		return profile;
+		
+	}
+	
+	private static Profile selectProfileWithAccounts(String prompt) {
+		log.debug("SelectProfile Started");
+		Profile profile = null;
+		ProfileServiceData.getServiceData();
 		List<Profile> allProfiles = ProfileServiceData.getAllProfilesWithAccounts();
 		
 		System.out.println(prompt);
@@ -213,15 +270,10 @@ public class EmployeeAdminMenu {
 			}
 		}
 		
-		
-		
 		ProfileServiceData.getServiceData();
 		profile = ProfileServiceData.findProfile(userInput);
 		
-		 
 		return profile;
-		
-		
 		
 	}
 
@@ -244,7 +296,7 @@ public class EmployeeAdminMenu {
 	private static Account selectAccount(String prompt) {
 		Account selectedAccount = null;
 		AccountServiceData.getServiceData();
-		Profile profile = selectProfile(prompt);
+		Profile profile = selectProfileWithAccounts(prompt);
 		List<Account> allAccounts = AccountServiceData.getConnectedAccounts(profile);
 		Scanner scanner = new Scanner(System.in);
 		
