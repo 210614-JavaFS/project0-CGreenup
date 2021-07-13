@@ -1,6 +1,5 @@
 package com.revature.ui;
 
-import java.awt.font.NumericShaper;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -12,7 +11,7 @@ import com.revature.services.AccountServiceData;
 public class AccountMenu {
 	private static Scanner scanner = new Scanner(System.in);
 	
-	public void manageAccounts(Profile profile) {
+	public static void manageAccounts(Profile profile) {
 		AccountServiceData.getServiceData();
 		List<Account> connectedAccounts = printAccounts(profile);
 		Account managedAccount;
@@ -42,29 +41,7 @@ public class AccountMenu {
 					
 					if(!managedAccount.getIsApplication()) {
 						List<Account> validAccounts = getValidAccounts(connectedAccounts);
-						List<String> menuOptions = printTransactionMenu(validAccounts);
-						String transactionInput;
-						do {
-							transactionInput = scanner.nextLine().strip();
-							
-						}while(transactionInput.equals(""));
-						
-						for(String s : menuOptions) {
-							if (s.toLowerCase().contains(transactionInput)) {
-								if(s.contains("Transfer")) {
-									transfer(managedAccount, validAccounts);
-									break;
-								}
-								else if(s.contains("Deposit")) {
-									deposit(managedAccount);
-									break;
-								}
-								else if(s.contains("Withdraw")) {
-									withdraw(managedAccount);
-									break;
-								}
-							}
-						}
+						transactionMenu(managedAccount, validAccounts);
 						
 					}
 					else {
@@ -83,7 +60,34 @@ public class AccountMenu {
 	}
 
 
-	private List<String> printTransactionMenu(List<Account> validAccounts) {
+	private static void transactionMenu(Account managedAccount, List<Account> validAccounts) {
+		List<String> menuOptions = printTransactionMenu(validAccounts);
+		String transactionInput;
+		do {
+			transactionInput = scanner.nextLine().strip();
+			
+		}while(transactionInput.equals(""));
+		
+		for(String s : menuOptions) {
+			if (s.toLowerCase().contains(transactionInput)) {
+				if(s.contains("Transfer")) {
+					transfer(managedAccount, validAccounts);
+					break;
+				}
+				else if(s.contains("Deposit")) {
+					deposit(managedAccount);
+					break;
+				}
+				else if(s.contains("Withdraw")) {
+					withdraw(managedAccount);
+					break;
+				}
+			}
+		}
+	}
+
+
+	private static List<String> printTransactionMenu(List<Account> validAccounts) {
 		List<String> menuOptions = new ArrayList<String>();
 		menuOptions.add("Deposit");
 		menuOptions.add("Withdraw");
@@ -99,7 +103,7 @@ public class AccountMenu {
 	}
 
 
-	private List<Account> getValidAccounts(List<Account> accounts) {
+	private static List<Account> getValidAccounts(List<Account> accounts) {
 		List<Account> temp = new ArrayList<Account>();
 		
 		for(Account a : accounts) {
@@ -147,7 +151,7 @@ public class AccountMenu {
 		
 	}
 	
-	private List<Account> printAccounts(Profile profile) {
+	private static List<Account> printAccounts(Profile profile) {
 		final int spacing = 5;
 		System.out.println("Here are all your accounts");
 		System.out.printf("%-"+spacing+"s %-"+ spacing*2 +"s %-" + spacing*3 +"s %s \n",
@@ -174,8 +178,8 @@ public class AccountMenu {
 		return userAccounts;
 	}
 	
-	private void deposit(Account account) {
-		System.out.println("How much would you like to deposit into your account?");
+	private static void deposit(Account account) {
+		System.out.println("How much would you like to deposit into this account?");
 		double funds = 0;
 		boolean validInput = false;
 		double newBalance;
@@ -199,8 +203,8 @@ public class AccountMenu {
 		}
 	}
 	
-	private void withdraw(Account account) {
-		System.out.println("How much would you like to withdraw from your account?");
+	private static void withdraw(Account account) {
+		System.out.println("How much would you like to withdraw from this account?");
 		double funds = 0;
 		boolean validInput = false;
 		double newBalance;
@@ -224,7 +228,7 @@ public class AccountMenu {
 		}
 	}
 	
-	private void transfer(Account account, List<Account> validAccounts) {
+	private static void transfer(Account account, List<Account> validAccounts) {
 		validAccounts.remove(account);
 		
 		System.out.println("Please select the number corresponding to the account you would like to transfer money to:");

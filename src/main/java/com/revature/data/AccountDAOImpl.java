@@ -257,12 +257,13 @@ public class AccountDAOImpl implements AccountDAO {
 				Profile accMaker;
 				accMaker = implement.findProfile(result.getString("account_maker"));
 				Account acc = new Account(
-						result.getInt("account_id"),
+						0,
 						accMaker, 
 						result.getString("account_name"), 
 						result.getString("account_type"), 
 						result.getDouble("balance"), 
 						result.getBoolean("is_application"));	
+				acc.setId(findId(acc));
 				list.add(acc);
 			}
 			

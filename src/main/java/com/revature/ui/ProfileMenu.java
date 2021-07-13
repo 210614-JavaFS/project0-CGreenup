@@ -5,6 +5,7 @@ import java.util.Scanner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.revature.models.AccountTypes;
 import com.revature.models.Profile;
 import com.revature.services.ProfileServiceData;
 
@@ -27,9 +28,15 @@ public class ProfileMenu {
 			logger.info("User Canceled login");
 			return;
 		}
-			
 		
 		System.out.println("Welcome, " + profile.getFirstName() + ".");
+		
+		//Employee and Admin menu options
+		if(profile.getAccountType() != AccountTypes.USER) {
+			EmployeeAdminMenu.menu(profile);
+			System.out.println("Logging out...");
+			return;
+		}
 		
 		//PROFILE MENU AND OPTIONS
 		do {

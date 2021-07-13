@@ -11,4 +11,5 @@ public interface ProfileDAO {
 	public boolean updateProfile(Profile profile, String username);
 	public boolean addProfile(Profile profile);
 	public boolean usernameTaken(String username);
+	public List<Profile> findAllProfilesWithAccounts();
 }

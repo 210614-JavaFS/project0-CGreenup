@@ -74,22 +74,22 @@ public class Driver {
 		
 		//If the user doesn't enter anything do nothing
 		if (userInput.equals("")) {
-			System.out.println("buh");
+			return false;
 		}
 		//Otherwise, if the user entered anything within login, call the login method
 		else if(menuOptions[0].toLowerCase().contains(inputArray[0])) {
-			//DEBUG
-			ProfileServiceData.getServiceData();
-			ProfileServiceData.printProfiles();
+//			//DEBUG
+//			ProfileServiceData.getServiceData();
+//			ProfileServiceData.printProfiles();
 			
 			
 			login();
 		}
 		//Otherwise, if the user entered anything within "create new account" call the createAccount method
 		else if (menuOptions[1].toLowerCase().contains(inputArray[0])) {
-			//DEBUG
-			ProfileServiceData.getServiceData();
-			ProfileServiceData.printProfiles();
+//			//DEBUG
+//			ProfileServiceData.getServiceData();
+//			ProfileServiceData.printProfiles();
 			
 			createAccount();
 		}

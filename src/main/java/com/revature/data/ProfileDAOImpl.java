@@ -270,6 +270,52 @@ try(Connection conn = ConnectionUtil.getConnection()){
 		}
 		return false;
 	}
+	
+	public List<Profile> findAllProfilesWithAccounts(){
+		try(Connection conn = ConnectionUtil.getConnection()){
+			String sql = "SELECT * FROM profile INNER JOIN account ON account.account_maker = profile.user_name;";
+			
+			Statement statement = conn.createStatement();
+			
+			ResultSet result = statement.executeQuery(sql);
+			
+			List<Profile> list = new ArrayList<Profile>();
+			
+			//ResultSets have a cursor; like how a Scanner has a cursor
+			while(result.next()) {
+				Profile profile = new Profile();
+				profile.setFirstName(result.getString("first_name"));
+				profile.setLastName(result.getString("last_name"));
+				profile.setUsername(result.getString("user_name"));
+				profile.setPassword(result.getString("user_pass"));
+				String userLevel = result.getString("user_level").toLowerCase();
+				switch(userLevel) {
+				case "adm":
+					profile.setAccountType(AccountTypes.ADMIN);
+					break;
+				case "emp":
+					profile.setAccountType(AccountTypes.EMPLOYEE);
+					break;
+				case "use":
+				default:
+					profile.setAccountType(AccountTypes.USER);
+					break;
+				}
+				if (!list.contains(profile))
+					list.add(profile);
+			}
+			
+			
+			return list;
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
+		log.info("findAll successful");
+		
+		return null;		
+	}
 
 
 }

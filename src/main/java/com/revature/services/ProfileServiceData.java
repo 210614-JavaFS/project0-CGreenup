@@ -159,13 +159,34 @@ public class ProfileServiceData {
 	}
 	
 	
+//DEBUG	
+//	public static void printProfiles() {
+//		List<Profile> allProfiles = getAllProfiles();
+//		
+//		for (Profile p : allProfiles) {
+//			System.out.println(p.getUsername() + " " + p.getPassword() + " " + p.getFirstName() + " " + p.getLastName() + ": " + p.getAccountType());
+//		}
+//	}
 	
-	public static void printProfiles() {
-		List<Profile> allProfiles = implement.findAll();
+	public static List<Profile> getAllProfiles(){
+		return implement.findAll();
+	}
+	
+	public static List<Profile> getAllProfilesWithAccounts(){
+		return implement.findAllProfilesWithAccounts();
+	}
+
+
+	public static Profile findProfile(String username) {
+		Profile profile = null;
+		profile = implement.findProfile(username);
 		
-		for (Profile p : allProfiles) {
-			System.out.println(p.getUsername() + " " + p.getPassword() + " " + p.getFirstName() + " " + p.getLastName() + ": " + p.getAccountType());
-		}
+		return profile;
+	}
+	
+	public static boolean checkUsername(String username) {
+		Profile profile = implement.findProfile(username);
+		return (profile != null);
 	}
 	
 

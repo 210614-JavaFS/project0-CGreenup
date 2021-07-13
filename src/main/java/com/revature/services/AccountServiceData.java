@@ -11,14 +11,13 @@ import com.revature.models.Profile;
 
 public class AccountServiceData {
 	private static AccountServiceData serviceData = null;
-	private static AccountDAOImpl aImplement;
+	private static AccountDAOImpl aImplement = new AccountDAOImpl();;
 	private static Logger log = LoggerFactory.getLogger(AccountServiceData.class);
 	
 	
 		
 	private AccountServiceData() {
 		super();
-		aImplement = new AccountDAOImpl();
 	}
 	
 	public static AccountServiceData getServiceData() {
@@ -75,12 +74,12 @@ public class AccountServiceData {
 	public static double withdrawFunds(Account account, double funds) {
 		try {
 			account.changeBalance(-funds);
+			account.changeBalance(0);
 			aImplement.updateAccount(account, account.getId());
 			log.info(account.getOwner() + " successfully withdrew funds from account");
 			return account.getBalance();
 		} catch (NegativeAccountException e) {
 			log.error("Could not fulfill " + account.getOwner() + "'s withdraw request");
-			e.printStackTrace();
 		}
 		return -1;
 	}
