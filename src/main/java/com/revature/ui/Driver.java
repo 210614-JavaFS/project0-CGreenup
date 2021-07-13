@@ -86,17 +86,11 @@ public class Driver {
 			login();
 		}
 		//Otherwise, if the user entered anything within "create new account" call the createAccount method
-		else if (menuOptions[1].toLowerCase().contains(inputArray[0])) {
-//			//DEBUG
-//			ProfileServiceData.getServiceData();
-//			ProfileServiceData.printProfiles();
-			
+		else if (menuOptions[1].toLowerCase().contains(inputArray[0])) {			
 			createAccount();
 		}
 		//Otherwise, if the user enters a word to quit, end the program
 		else if(menuOptions[2].concat("leave end exit").toLowerCase().contains(inputArray[0])) {
-			//TODO
-			System.out.println(menuOptions[2] + " " + inputArray[0]);
 			return true;
 		}
 		else {

@@ -111,10 +111,13 @@ public class AccountServiceData {
 		if(aImplement.findId(account) != 0) {
 			log.debug("Account is valid");
 			if(isAccepted) {
-				account.setIsApplication(isAccepted);
+				account.setIsApplication(false);
 				aImplement.updateAccount(account, account.getId());
+				System.out.println("Account approved!");
 				log.info("Application for account approved");
 			}else {
+				System.out.println("Account denied");
+				log.info("Application for accound denied. Deleting account.");
 				aImplement.removeAccount(account);
 			}
 			
@@ -159,7 +162,15 @@ public class AccountServiceData {
 		}else {
 			log.info("Admin decided to delte account: " + account.toString());
 			return aImplement.removeAccount(account);
+			
+			
 		}
 		
 	}
+	
+	public static List<Account> getApplications(){
+		return aImplement.findAllApplications();
+	}
+	
+	
 }

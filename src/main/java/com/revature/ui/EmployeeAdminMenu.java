@@ -44,6 +44,9 @@ public class EmployeeAdminMenu {
 		
 		do {
 			scanner = new Scanner(System.in);
+			System.out.println(	"========================="
+					+ 			"\nMenu\n"
+					+ 			"=========================");
 			printMenuOptions(menuOptions);
 			userInput = scanner.nextLine().strip().toLowerCase();
 			if(!userInput.equals(""))
@@ -61,16 +64,16 @@ public class EmployeeAdminMenu {
 						break;
 					}
 					else if(s.contains("Cancel")) {
-						
 						deleteAccount();
 						break;
 					}
 					else if(s.contains("Applications")) {
+						determineApplication();
 						
 						break;
 					}
 					else if(s.contains("View")) {
-						System.out.println("view");
+						
 						break;
 					}
 					else if(s.contains("Quit")) {
@@ -90,13 +93,38 @@ public class EmployeeAdminMenu {
 		 
 	}
 
+	private static void determineApplication() {
+		Scanner scanner = new Scanner(System.in);
+		List<Account> applications = AccountServiceData.getApplications();
+		System.out.println(	"Applications:\n"
+						+ 	"=========================");
+		Account application = selectAccount(applications);
+		if(application != null) {
+			System.out.println("Will you approve or deny this application?");
+			boolean validInput = false;
+			String userInput;
+			boolean decision;
+			do {
+				userInput = scanner.nextLine().strip().toLowerCase();
+				if("approve".contains(userInput) || "deny".contains(userInput))
+					validInput = true;
+			}while(!validInput);
+			decision = "approve".contains(userInput) ? true : false;
+			AccountServiceData.getServiceData();
+			AccountServiceData.acceptApplication(application, decision);
+		}
+	}
+
 	private static void deleteAccount() {
 		Account accountToDelete = selectAccount("Enter the username of the account to delete");
-		AccountServiceData.getServiceData();
-		if( AccountServiceData.deleteAccount(accountToDelete)) {
-			System.out.println("Account deleted successfully");
-		}else {
-			System.out.println("Account deletion canceled");
+		
+		if(accountToDelete != null) {
+			AccountServiceData.getServiceData();
+			if( AccountServiceData.deleteAccount(accountToDelete)) {
+				System.out.println("Account deleted successfully");
+			}else {
+				System.out.println("Account deletion canceled");
+			}
 		}
 	}
 
@@ -220,43 +248,86 @@ public class EmployeeAdminMenu {
 		List<Account> allAccounts = AccountServiceData.getConnectedAccounts(profile);
 		Scanner scanner = new Scanner(System.in);
 		
-		System.out.println("Select the number corresponding to the account:");
-		printAccounts(allAccounts);
-		
-		//getuserInput
-		boolean validInput = false;
-		int userInput = -1;
-		while(!validInput) {
-			try {;
-				userInput = Integer.parseInt(scanner.nextLine());
-				if(userInput < 1 || userInput > allAccounts.size()) {
-					throw new NumberFormatException();
+		if(allAccounts.size() > 0) {
+			System.out.println("Select the number corresponding to the account:");
+			printAccounts(allAccounts);
+			
+			//getuserInput
+			boolean validInput = false;
+			int userInput = -1;
+			while(!validInput) {
+				try {;
+					userInput = Integer.parseInt(scanner.nextLine());
+					if(userInput < 1 || userInput > allAccounts.size()) {
+						throw new NumberFormatException();
+					}
+					validInput = true;
+					
+				}catch(NumberFormatException e) {
+					System.out.println("That isn't a valid number, please select a valid number on screen.");
 				}
-				validInput = true;
-				
-			}catch(NumberFormatException e) {
-				System.out.println("That isn't a valid number, please select a valid number on screen.");
 			}
+			
+			selectedAccount = allAccounts.get(userInput-1);
+			log.debug("Finished SelectAccount in EmployeeAdminMenu: account:" + selectedAccount.toString());
+		}else {
+			System.out.println("This list is empty");
+		}
+		 
+		return selectedAccount;
+	}
+	
+	private static Account selectAccount(List<Account> allAccounts) {
+		Account selectedAccount = null;
+		AccountServiceData.getServiceData();
+		Scanner scanner = new Scanner(System.in);
+		
+		
+		if(allAccounts.size() > 0) {
+			System.out.println("Select the number corresponding to the account:");
+			printAccounts(allAccounts);
+			
+			//getuserInput
+			boolean validInput = false;
+			int userInput = -1;
+			while(!validInput) {
+				try {;
+					userInput = Integer.parseInt(scanner.nextLine());
+					if(userInput < 1 || userInput > allAccounts.size()) {
+						throw new NumberFormatException();
+					}
+					validInput = true;
+					
+				}catch(NumberFormatException e) {
+					System.out.println("That isn't a valid number, please select a valid number on screen.");
+				}
+			}
+			
+			selectedAccount = allAccounts.get(userInput-1);
+			log.debug("Finished SelectAccount in EmployeeAdminMenu: account:" + selectedAccount.toString());
+		}else {
+			System.out.println("This list is empty");
 		}
 		
-		selectedAccount = allAccounts.get(userInput-1);
-		
 		 
-		log.debug("Finished SelectAccount in EmployeeAdminMenu: account:" + selectedAccount.toString());
 		return selectedAccount;
 	}
 
 	private static void printAccounts(List<Account> allAccounts) {
 		final int spacing = 5;
 		
-		for(int i = 0; i < allAccounts.size(); i++){
-			Account acc = allAccounts.get(i);
-			String varString;
-			if(allAccounts.get(i).getIsApplication())
-				varString = "(PENDING)";
-			else
-				varString = allAccounts.get(i).getAccountType();
-			System.out.printf("%-"+spacing+"s %-"+ spacing*2 +"s %-" + spacing*3 +"s %s \n", (i+1) + ")", acc.getBalance(), varString, acc.getAccountName());
+		if(allAccounts.size() > 0) {
+			for(int i = 0; i < allAccounts.size(); i++){
+				Account acc = allAccounts.get(i);
+				String varString;
+				if(allAccounts.get(i).getIsApplication())
+					varString = "(PENDING)";
+				else
+					varString = allAccounts.get(i).getAccountType();
+				System.out.printf("%-"+spacing+"s %-"+ spacing*2 +"s %-" + spacing*3 +"s %s \n", (i+1) + ")", acc.getBalance(), varString, acc.getAccountName());
+			}
+		}else {
+			System.out.println("There are no accounts.");
 		}
 	}
 
