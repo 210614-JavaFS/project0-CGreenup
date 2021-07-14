@@ -73,7 +73,7 @@ public class EmployeeAdminMenu {
 						break;
 					}
 					else if(s.contains("View")) {
-						Profile inspectedProfile = selectProfile("Select a user to inspect");
+						Profile inspectedProfile = selectUserProfile("Select a user to inspect");
 						if (inspectedProfile != null) {
 							System.out.println("User's information:");
 							System.out.println("================================");
@@ -181,15 +181,22 @@ public class EmployeeAdminMenu {
 		}
 	}
 	
-	private static Profile selectProfile(String prompt) {
+	private static Profile selectUserProfile(String prompt) {
 		log.debug("SelectProfile Started");
 		Profile profile = null;
 		ProfileServiceData.getServiceData();
 		List<Profile> allProfiles = ProfileServiceData.getAllProfiles();
+		List<Profile> userProfiles = new ArrayList<Profile>();
+		for(int i = 0; i < allProfiles.size(); i++) {
+			Profile p = allProfiles.get(i);
+			if(p.getAccountType() == AccountTypes.USER) {
+				userProfiles.add(p);
+			}
+		}
 		
 		System.out.println(prompt);
 		
-		printAllProfiles(allProfiles);
+		printAllProfiles(userProfiles);
 		
 		
 		//getUserInput
@@ -208,8 +215,8 @@ public class EmployeeAdminMenu {
 			}
 			else if(userInput.matches("\\d+")) {
 				test = Integer.parseInt(userInput);
-				if(test <= allProfiles.size() && test > 0) {
-					return allProfiles.get(test - 1);
+				if(test <= userProfiles.size() && test > 0) {
+					return userProfiles.get(test - 1);
 				}
 				else {
 					System.out.println("That number is not within the range, please try again.");
