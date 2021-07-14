@@ -190,8 +190,9 @@ public class AccountMenu {
 				if(funds < 0)
 					throw new NumberFormatException("Input cannot be negative");
 				validInput = true;
-			}catch(NumberFormatException e) {
+			}catch(Exception e) {
 				System.out.println("Invalid Input");
+				scanner = new Scanner(System.in);
 			}
 		}while(!validInput);
 		AccountServiceData.getServiceData();
@@ -215,8 +216,9 @@ public class AccountMenu {
 				if(funds < 0)
 					throw new NumberFormatException("Input cannot be negative");
 				validInput = true;
-			}catch(NumberFormatException e) {
+			}catch(Exception e) {
 				System.out.println("Invalid Input");
+				scanner = new Scanner(System.in);
 			}
 		}while(!validInput);
 		AccountServiceData.getServiceData();
